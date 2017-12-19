@@ -1,15 +1,13 @@
 # API architecture
 
-Sending a text message
+## Send a message
 
-send_sms_notification: Service makes an API Post of send_sms_notification to Notify. State: ???
+![](images/Architecture - Send a message.png)
 
-SMS delivery: Notify accept the message and send it to delivery providers for delivery to recipient. State: Sending
+## Get message status
 
-SMS delivery receipt: Notify has successfully delivered a message to user’s email inbox or phone. Notify won’t tell you if a user has opened or read a message. _QP: Contradicts diagram where it says delivery receipt?_ State: Delivered
+![](images/Architecture - Get message status.png)
 
-_QP: Where does Sent Internationally fit_
+## Get inbound messages
 
-API Response: _QP: Need more information. Is the state Delivered?_ State: Delivered
-
-_QP: need help on this!_
+![](images/Architecture - Get inbound messages.png)
