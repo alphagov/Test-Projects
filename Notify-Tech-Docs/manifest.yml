@@ -1,6 +1,6 @@
 ---
 applications:
-- name: notifications
+- name: notify-tech-docs-prototype 
   memory: 64M
   path: ./build
   buildpack: staticfile_buildpack
