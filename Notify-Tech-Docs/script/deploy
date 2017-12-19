@@ -37,6 +37,5 @@ fi
 echo "OK!"
 
 bundle exec middleman build
-cp Staticfile.auth build
 cp nginx.conf build
 cf push
