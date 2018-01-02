@@ -12,25 +12,26 @@ pip install notifications-python-client
 
 ## Generate an API key
 
-Register for a [GOV.UK Notify account](https://www.notifications.service.gov.uk/register) and log in. If you have any issues logging in, report them at the [GOV.UK Notify support page](https://www.notifications.service.gov.uk/support).
+[Register](https://www.notifications.service.gov.uk/register) for a GOV.UK Notify account and log in. If you have any issues logging in, report them at the [GOV.UK Notify support page](https://www.notifications.service.gov.uk/support) or on the GOV.UK Notify [slack channel](https://govuk.slack.com/messages/C0AC2LX7E).
 
+1. Log into your GOV.UK Notify account.
 1. Go to API integration and click _API keys_.
 1. Click _Create an API key_.
 1. Type a name for the key.
-1. Select "Test - pretends to send messages" for _Type of key_ and click _continue_.
+1. Select either "Test - pretends to send messages" or "Team or whitelist" for _Type of key_ and click _Continue_.
 
 Your API key will be generated. Make note of this key as you won’t be able to see it again once you leave this page.
 
-Information on API keys can be found [here](/#types-of-api-keys).
+Information on API keys can be found [here](/#api-keys).
 
 ## Get a template ID
 
-Every notification follows a template. Templates are created by logging into your GOV.UK Notify account and clicking Templates.
+Every notification follows a template. Templates are created by logging into your GOV.UK Notify account, clicking _Templates_ and then clicking the _Add new template_ button.
 
 The API Notification client requires a template ID. Once the notification template has been created, you must copy the template ID from that template:
 
 1. Log into your GOV.UK Notify account.
-1. Go to Templates and click on the template you need.
+1. Go to _Templates_ and click on the template you need.
 1. Copy the template ID.
 
 ## Set up API Notification client
@@ -45,7 +46,7 @@ You will now create a new instance of API Notification client. This client will 
     notifications_client = NotificationsAPIClient(api_key)
     ```
 
-1. Copy the API key you created into the `api_key` parameter in the code.
+1. Copy the API key you created into the `api_key` argument.
 
 Once this has been installed you are ready to send a test message.
 
@@ -55,7 +56,7 @@ Once this has been installed you are ready to send a test message.
 
 ### Method
 
-1. Add the following method code to your application code below the API Notification client:
+1. Add the following method code to your application code:
 
     ```python
     response = notifications_client.send_sms_notification(
@@ -145,11 +146,11 @@ personalisation={
 An unique identifier of the sender of the text message notification. To set this up:
 
 1. Log into your GOV.UK Notify account.
-1. Go to Settings.
-1. Check that you are in the correct service; if you are not, click Switch service in the top right corner of the screen and select the correct one.
-1. Go to the Text Messages section and click Manage on the Text Message sender row.
+1. Go to _Settings_.
+1. Check that you are in the correct service; if you are not, click _Switch service_ in the top right corner of the screen and select the correct one.
+1. Go to the Text Messages section and click _Manage_ on the "Text Message sender" row.
 1. You can either:
-  - copy the ID of the sender you want to use and paste it into the method
+  - copy the ID of the sender you want to use and paste it into the method code
   - click _Change_ to change the default sender that the service will use, and click _Save_
 
 If you omit this argument from your method, the default `sms_sender_id` will be set for the notification.
@@ -158,7 +159,7 @@ If you omit this argument from your method, the default `sms_sender_id` will be 
 
 ### Method
 
-1. Add the following method code to your application below the API Notification client:
+1. Add the following method code to your application:
 
     ```python
     response = notifications_client.send_email_notification(
@@ -245,10 +246,10 @@ personalisation={
 This is an email reply-to address specified by you to receive replies from your users. Your service cannot go live until at least one email address has been set up for this. To set up:
 
 1. Log into your GOV.UK Notify account.
-1. Go to Settings.
-1. Check that you are in the correct service; if you are not, click Switch service in the top right corner of the screen and select the correct one.
-1. Go to the Email section and click Manage on the Email reply to addresses row.
-1. Click Change to specify the email address to receive replies, and click Save.
+1. Go to _Settings_.
+1. Check that you are in the correct service; if you are not, click _Switch service_ in the top right corner of the screen and select the correct one.
+1. Go to the Email section and click _Manage_ on the "Email reply to addresses" row.
+1. Click _Change_ to specify the email address to receive replies, and click _Save_.
 
 If you omit this argument, your default email reply-to address will be set for the notification.
 
@@ -258,15 +259,15 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
 
 ### Method
 
-1. Add the following method code to your application below the API Notification client:
+1. Add the following method code to your application:
 
     ```python
     response = notifications_client.send_letter_notification(
         template_id='TEMPLATE_ID',
         personalisation={
-          'address_line_1': 'ADDRESS LINE 1 e.g. The Occupier',
-          'address_line_2': 'ADDRESS LINE 2 e.g. 123 High Street',
-          'postcode': 'POSTCODE e.g.SW14 6BH',
+          'address_line_1': 'ADDRESS LINE 1 for example The Occupuier',
+          'address_line_2': 'ADDRESS LINE 2 for example 123 High Street',
+          'postcode': 'POSTCODE for example SW14 6BH',
           ...
         },
         reference=None
@@ -274,9 +275,7 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
     ```
 
 1. Complete the required `template_id` argument.
-
 1. Complete the required `personalisation` arguments (the code example above only includes the required parameters).
-
 1. Complete the optional `personalisation` arguments if required.
 
 You are now ready to send a letter notification. Run your application to send a request to API Notification client.
@@ -327,7 +326,7 @@ The ID of the template. You can find this by logging into GOV.UK Notify and goin
 
 `personalisation`
 
-The personalisation argument contains the following required parameters for the letter recipient's address:
+The personalisation argument always contains the following required parameters for the letter recipient's address:
 
 - `address_line_1`
 - `address_line_2`
@@ -337,10 +336,10 @@ The personalisation argument also contains all specified letter template placeho
 
 ```python
 personalisation={
-  'address_line_1': '123 High Street', # First line of address
-  'address_line_2': 'London', # Second line of address
-  'postcode': 'SW14 6BF', # Postcode
-  'name': 'John Smith', # Name
+  'address_line_1': '123 High Street', # first line of address
+  'address_line_2': 'London', # second line of address
+  'postcode': 'SW14 6BF', # postcode
+  'name': 'John Smith', # name
   'application_id': '4134325', # application identifier
 }
 ```
@@ -364,8 +363,7 @@ personalisation={
 }
 ```
 
-
-# Get the status of a message
+# Get message status
 
 ## Get the status of one message
 
@@ -436,13 +434,13 @@ The ID of the notification.
 
 ## Get the status of all messages
 
-You can return the status of all messages both with and without pagination.
+This API call returns the status of all messages. You can either get the status of all messages in one call, or one page of up to 250 messages.
 
 ### Method
 
-#### With pagination
+#### All messages
 
-This will return all your messages with statuses; they will be displayed as pages of 250 messages per page.
+This will return all your messages with statuses; they will be displayed in pages of up to 250 messages each.
 
 Add the following method code to your application:
 
@@ -450,11 +448,15 @@ Add the following method code to your application:
 response = notifications_client.get_all_notifications(template_type, status, reference, older_than)
 ```
 
+You can filter the returned messages by including the optional arguments in the method code.
+
 Run your application to send a request to API Notification client.
 
-#### Without pagination
+#### One page of up to 250 messages
 
-This will return one page with the most recent 250 messages and statuses.
+This will return one page of up to 250 messages and statuses. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the `older_than` argument.
+
+##### Most recent messages
 
 Add the following method code to your application:
 
@@ -464,23 +466,24 @@ response = get_all_notifications_iterator(status="sending")
 
 Run your application to send a request to API Notification client.
 
-To get messages that are older than the most recent 250:
+##### Older messages
 
-1. Use the method code above to return the most recent 250 messages.
-1. Copy the ID of the last notification in this response.
-1. Use the following code to get the next-oldest 250 messages, pasting the copied ID into the `older_than` argument.
+To get older messages:
+
+1. Get the ID of an older notification.
+1. Add the following code to your application, with the older notification ID in the `older_than` argument.
 
     ```python
     response = get_all_notifications_iterator(status="sending",older_than="NOTIFICATION ID")
     ```
 
-_QP: Is this code correct?_
+Run your application to send a request to API Notification client. It will return the next oldest messages from the specified notification ID.
 
 ### Response
 
 If the request to the client is successful, you will receive a `dict` response.
 
-#### With pagination
+#### All messages
 
 ```python
 {"notifications":
@@ -519,7 +522,7 @@ If the request to the client is successful, you will receive a `dict` response.
 }
 ```
 
-#### Without pagination
+#### One page of up to 250 messages
 
 ```python
 <generator object NotificationsAPIClient.get_all_notifications_iterator at 0x1026c7410>
@@ -546,21 +549,21 @@ You can omit any of these arguments to ignore these filters.
 
 You can filter by:
 
-* `email`
-* `sms`
-* `letter`
+* email
+* sms
+* letter
 
 `status`
 
 | status | description | text | email | letter |
-| :--- | :--- | :--- | :--- | :--- |
+|:--- |:--- |:--- |:--- |:--- |
 |sending |The message is queued to be sent by the provider|Yes|Yes||
 |delivered|The message was successfully delivered|Yes|Yes||
 |failed|This will return all failure statuses:<br>- `permanent-failure`<br>- `temporary-failure`<br>- `technical-failure`|Yes|Yes||
 |permanent-failure|The provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list|Yes|Yes||
 |temporary-failure|The provider was unable to deliver message, email inbox was full or phone was turned off; you can try to send the message again|Yes|Yes||
 |technical-failure|Email / Text: Notify had a technical failure; you can try to send the message again. <br><br>Letter: Notify had an unexpected error while sending to our printing provider. <br><br>You can omit this argument to ignore this filter.|Yes|Yes||
-|accepted|Notify is in the process of printing and posting the letter|||Yes|
+|accepted|Notify is printing and posting the letter|||Yes|
 
 `reference`
 
@@ -568,10 +571,9 @@ An unique identifier for the notification. This reference can identify a single 
 
 `older_than`
 
-This argument allows you to get the notifications older than a given `Notification.notificationId`.
+Input the ID of a notification into this argument. If you use this argument, the next 250 received notifications older than the given ID are returned.
 
-This argument only applies to getting the status of all messages __with pagination__.
-
+If this argument is omitted, the most recent 250 notifications are returned.
 
 # Get a template
 
@@ -637,7 +639,7 @@ Add the following method code to your application:
 ```python
 response = notifications_client.get_template_version(
     'template_id',
-    1   # integer required for version number
+    `version` # integer required for version number
 )
 ```
 
@@ -704,7 +706,7 @@ If the request to the client is successful, you will receive a `dict` response.
 
 ```python
 {
-    "templates" : [
+    "templates": [
         {
             "id": "template_id", # required
             "type": "sms" | "email" | "letter", # required
@@ -726,7 +728,7 @@ If no templates exist for a template type or there no templates for a service, y
 
 ```python
 {
-    "templates" : []
+    "templates": []
 }
 ```
 
@@ -736,11 +738,11 @@ If no templates exist for a template type or there no templates for a service, y
 
 `template_type`
 
-If omitted all messages are returned. Otherwise you can filter by:
+If omitted all templates are returned. Otherwise you can filter by:
 
-- `email`
-- `sms`
-- `letter`
+- email
+- sms
+- letter
 
 ## Generate a preview template
 
@@ -756,10 +758,9 @@ response = notifications_client.post_template_preview(
     personalisation={'name': 'chris'}
 )
 ```
+The parameters in the personalisation argument must match the placeholder fields in the actual template. Any extra fields in the method code are ignored by the API notification client.
 
-Run your application to send a request to API Notification client.
-
-_QP: How do personalisation fields work here? If you specify a template ID, and then add in personalisation fields, but the template does not have those fields, what is returned? A combination of the two? Or an error?_
+Run your application to send a request to API Notification client
 
 ### Response
 
@@ -783,7 +784,7 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 |`error.status_code`|`error.message`|
 |:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Missing personalisation: [name]"`<br>`}]`|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Missing personalisation: [PERSONALISATION FIELD]"`<br>`}]`|
 |`400`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|
 
 #### Arguments
@@ -802,3 +803,84 @@ personalisation={
     'reference_number': '300241',
 }
 ```
+
+# Get received text messages
+
+This API call returns received text messages. Depending on which method you use, you can either get all received text messages, or a page of up to 250 text messages.
+
+## Get all received text messages
+
+This method will return a `<generator object>` with all received text messages.
+
+### Method
+
+To return all received text messages, add the following method code to your application:
+
+```python
+response = get_received_texts_iterator()
+```
+
+Run your application to send a request to API Notification client.
+
+### Response
+
+If the request to the client is successful, you will receive a `<generator object>` response that will return all received texts.
+
+```python
+<generator object NotificationsAPIClient.get_received_texts_iterator at 0x1026c7410>
+```
+
+
+## Get one page of received text messages
+
+This will return one page of up to 250 text messages.  
+
+### Method
+
+Add the following method code to your application:
+
+```python
+response = client.get_received_texts(older_than)
+```
+
+You specify which texts to receive by inputting the ID of a received text message into the `older_than` argument.
+
+Run your application to send a request to API Notification client.
+
+### Response
+
+If the request to the client is successful, you will receive a `dict` response.
+
+
+```python
+{
+  "received_text_messages":
+  [
+    {
+      "id": "ID of the received text message", # required
+      "user_number": "user number", # required user number
+      "notify_number": "notify number", # receiving number
+      "created_at": "created at", # required
+      "service_id": "service id", # required service id
+      "content": "text content" # required text content
+    },
+    …
+  ],
+  "links": {
+    "current": "/received-text-messages",
+    "next": "/received-text-messages?other_than=last_id_in_list"
+  }
+}
+```
+
+### API reference
+
+#### Arguments
+
+##### Optional
+
+`older_than`
+
+Input the ID of a received text message into this argument. If you use this argument, the next 250 received text messages older than the given ID are returned.
+
+If this argument is omitted, the most recent 250 text messages are returned.

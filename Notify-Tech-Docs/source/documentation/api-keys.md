@@ -12,7 +12,7 @@ When you first sign up to Notify, you are able to create test and team and white
 
 Use a test key to test the performance of your service and its integration with GOV.UK Notify.
 
-Message sent using a test key:
+Messages sent using a test key:
 
 - generate realistic responses
 - result in a delivered status
@@ -34,9 +34,9 @@ Test keys do not have to be revoked.
 
 ## Team and whitelist
 
-Use a team and whitelist key for end-to-end functional testing. _QP: How does this differ from above?_
+A team and whitelist key lets you send real messages to your team members and addresses/numbers on your whitelist whilst your account is still in trial mode.
 
-A team and whitelist key lets you send real messages to members of your team and addresses/numbers that you have added to your whitelist. You will get an error if you use these keys to send messages to anyone else.
+You will get an error if you use these keys to send messages to anyone who isn't on your team or your whitelist.
 
 Messages sent with a team and whitelist key appear on your dashboard and count against your text message and email allowances.
 
@@ -51,8 +51,8 @@ Messages sent with a live key appear on your dashboard and count against your te
 You should revoke and re-create these keys on a regular basis. To revoke a key:
 
 1. Log into your GOV.UK Notify account.
-1. Click API integration and then API keys.
-1. Click Revoke for the API key you want to revoke.
+1. Click _API integration_ and then _API keys_.
+1. Click _Revoke_ for the API key you want to revoke.
 
 You can have more than one active key at a time.
 
