@@ -9,10 +9,10 @@ phase: Live
 
 # Links to show on right-hand-side of header
 header_links:
-  Support: https://www.notifications.service.gov.uk/support
-  Features: https://www.notifications.service.gov.uk/features
-  Pricing: https://www.notifications.service.gov.uk/pricing
-  Documentation: https://www.notifications.service.gov.uk/documentation
+  Support: https://notify-admin-prototype-production.cloudapps.digital/support
+  Features: https://notify-admin-prototype-production.cloudapps.digital/features
+  Pricing: https://notify-admin-prototype-production.cloudapps.digital/pricing
+  Documentation: https://notify-admin-prototype-production.cloudapps.digital/documentation
 
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
