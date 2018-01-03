@@ -2,12 +2,12 @@
 
 ## Send a message
 
-![](images/Architecture - Send a message.png)
+![](images/notify-send-a-message.png)
 
 ## Get message status
 
-![](images/Architecture - Get message status.png)
+![](images/notify-get-message-status.png)
 
 ## Get inbound messages
 
-![](images/Architecture - Get inbound messages.png)
+![](images/notify-get-inbound-messages.png)
