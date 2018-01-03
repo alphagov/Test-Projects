@@ -2,12 +2,12 @@
 
 ## Send a message
 
-![](images/notify-send-a-message.png)
+![](documentation/images/notify-send-a-message.png)
 
 ## Get message status
 
-![](images/notify-get-message-status.png)
+![](documentation/images/notify-get-message-status.png)
 
 ## Get inbound messages
 
-![](images/notify-get-inbound-messages.png)
+![](documentation/images/notify-get-inbound-messages.png)
