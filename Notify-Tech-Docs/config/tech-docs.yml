@@ -4,8 +4,8 @@ host: notifications
 # Header-related options
 show_govuk_logo: true
 service_name: Notify
-service_link: https://www.docs.notify.gov.uk
-phase: Live
+service_link: https://notify-admin-prototype-production.cloudapps.digital
+phase: Beta
 
 # Links to show on right-hand-side of header
 header_links:
