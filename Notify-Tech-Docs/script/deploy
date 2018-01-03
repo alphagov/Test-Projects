@@ -38,4 +38,5 @@ echo "OK!"
 
 bundle exec middleman build
 cp nginx.conf build
+cf target -o gds-design
 cf push
