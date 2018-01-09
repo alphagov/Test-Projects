@@ -1,41 +1,24 @@
 # Callbacks
 
-Received text messages can be forwarded to a URL that you specify, using the callback feature. Messages are forwarded as they are received.
+Callbacks are when Notify sends `POST` requests to your service. You can get callbacks when:
+
+- a text message or email you’ve sent is delivered or fails
+- your service receives a text message
 
 ## Set up callbacks
 
-To set up this functionality, you must:
+You must provide:
 
-- enable "receive text messages" for your service
-- provide a bearer token
-- specify the URL
+- a URL where Notify will post the callback to
+- a bearer token which Notify will put in the authorisation header of the requests
 
-### Enable "Receive text messages" for your service
+To do this, log into your GOV.UK Notify account, go to _API integration_ and click _Callbacks_.
 
-Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [slack channel](https://govuk.slack.com/messages/C0AC2LX7E) to enable "Receive text messages" for your service.
-
-### Provide a bearer token and a URL
-
-You must provide a bearer token and a URL to Notify:
-
-- the token allows the API notifications client access to your service, and goes in the authorisation header of the callback requests
-- the URL specifies where Notify will post the callback to
-
-To provide this information:
-
-1. Log into your GOV.UK Notify account.
-1. Go to _API integration_ and click _Callbacks_.
-1. Under _Callbacks for received text messages_, click _change_.
-1. Complete the _URL_ and _Bearer token_ fields and click _Save_.
-
-You have now set up your service to use Callbacks. There has two functions:
-
-- Text message forwarding
-- Message delivery receipt delivery
-
-## Text message forwarding
+## For received text messages
 
 If your service receives text messages in Notify, Notify can forward them to your callback URL as soon as they arrive.
+
+Contact the GOV.UK Notify team on the [support page](https://www.notifications.service.gov.uk/support) or through the [slack channel](https://govuk.slack.com/messages/C0AC2LX7E) to enable "Receive text messages" for your service.
 
 The callback message is formatted in JSON. The key, description and format of the callback message arguments are specified below:
 
@@ -47,9 +30,7 @@ The callback message is formatted in JSON. The key, description and format of th
 |message|The received message|Hello Notify!|
 |date_received|The UTC datetime that the message was received by Notify|2017-05-14T12:15:30.000000Z|
 
-_QP: Should we have an example callback message?_
-
-## Message delivery receipts
+## For delivery receipts
 
 When you send an email or text message through Notify, Notify will send a receipt to your callback URL with the status of the message. This is an automated method to get the status of messages.  
 
