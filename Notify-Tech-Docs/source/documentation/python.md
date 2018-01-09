@@ -1,42 +1,14 @@
-# Set up the API client
+# Set up the client
 
-## Download Python and install the client
+## Install the client
 
-To install the Python client library, you must first install [Python](https://www.python.org/downloads/). The client supports both Python 3.x and 2.7.
-
-Once Python is installed, run the following code in the command line to install the client library:
+Run the following code in the command line:
 
 ```shell
 pip install notifications-python-client
 ```
 
-## Generate an API key
-
-[Register](https://www.notifications.service.gov.uk/register) for a GOV.UK Notify account and log in. If you have any issues logging in, report them at the [GOV.UK Notify support page](https://www.notifications.service.gov.uk/support) or on the GOV.UK Notify [slack channel](https://govuk.slack.com/messages/C0AC2LX7E).
-
-1. Log into your GOV.UK Notify account.
-1. Go to API integration and click _API keys_.
-1. Click _Create an API key_.
-1. Type a name for the key.
-1. Select either "Test - pretends to send messages" or "Team or whitelist" for _Type of key_ and click _Continue_.
-
-Your API key will be generated. Make note of this key as you won’t be able to see it again once you leave this page.
-
-Information on API keys can be found [here](/#api-keys).
-
-## Get a template ID
-
-Every notification follows a template. Templates are created by logging into your GOV.UK Notify account, clicking _Templates_ and then clicking the _Add new template_ button.
-
-The API Notification client requires a template ID. Once the notification template has been created, you must copy the template ID from that template:
-
-1. Log into your GOV.UK Notify account.
-1. Go to _Templates_ and click on the template you need.
-1. Copy the template ID.
-
-## Set up API Notification client
-
-You will now create a new instance of API Notification client. This client will be used for your application.
+## Create a new instance of the client
 
 1. Add the following code to your application:
 
@@ -49,6 +21,10 @@ You will now create a new instance of API Notification client. This client will 
 1. Copy the API key you created into the `api_key` argument.
 
 Once this has been installed you are ready to send a test message.
+
+## Generate an API key
+
+To get an API key, [log in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the _API integration_ page. Information on API keys can be found [here](/#api-keys).
 
 # Send a message
 
@@ -122,7 +98,7 @@ The phone number of the recipient of the text message.
 
 `template_id`
 
-The ID of the template. You can find this by logging into GOV.UK Notify and going to the Templates page.
+Find this by logging into GOV.UK Notify and going to the Templates page.
 
 ##### Optional
 
