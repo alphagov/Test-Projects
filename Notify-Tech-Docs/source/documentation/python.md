@@ -10,20 +10,14 @@ pip install notifications-python-client
 
 ## Create a new instance of the client
 
-1. Add the following code to your application:
+Add the following code to your application:
 
     ```python
     from notifications_python_client.notifications import NotificationsAPIClient
 
     notifications_client = NotificationsAPIClient(api_key)
     ```
-
-1. Copy the API key you created into the `api_key` argument.
-
-Once this has been installed you are ready to send a test message.
-
-## Generate an API key
-
+    
 To get an API key, [log in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the _API integration_ page. Information on API keys can be found [here](/#api-keys).
 
 # Send a message
