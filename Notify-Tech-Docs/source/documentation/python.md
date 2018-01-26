@@ -32,8 +32,6 @@ To get an API key, [log in to GOV.UK Notify](https://www.notifications.service.g
 
 1. Add the following method code to your application code:
 
-    Add the following method code to your application code:
-
     ```python
     response = notifications_client.send_sms_notification(
         phone_number='07XXXXXXXXX', # for example 07967346238
