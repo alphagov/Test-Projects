@@ -8,7 +8,7 @@ Run the following code in the command line:
 pip install notifications-python-client
 ```
 
-The client supports both Python 3.x and 2.7.
+The client supports both Python 3.x and 2.7. Refer to the [client change log](https://github.com/alphagov/notifications-python-client/blob/master/CHANGELOG.md) for the version number and the latest updates.
 
 ## Create a new instance of the client
 
@@ -36,18 +36,17 @@ GOV.UK Notify enables you to send text messages, emails and letters.
 
     ```python
     response = notifications_client.send_sms_notification(
-        phone_number='07XXXXXXXXX', # for example 07967346238
-        template_id='XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX', # for example 2956cbb0-5e1f-4341-9334-cbc097b86d8a
+        phone_number='07XXXXXXXXX', # required string - for example 07967346238
+        template_id='XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX', # required string - for example 2956cbb0-5e1f-4341-9334-cbc097b86d8a
         personalisation={
             'KEY': 'VALUE',
             'KEY': 'VALUE',
             ...
-            },
-        reference='REFERENCE', # for example ???
-        sms_sender_id='XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX' # for example 8e222534-7f05-4972-86e3-17c5d9f894e2
+            }, # optional dict
+        reference='REFERENCE', # optional string - identifies the notification(s)
+        sms_sender_id='XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX' # £ optional string - for example 8e222534-7f05-4972-86e3-17c5d9f894e2
     )
     ```
-_QP: What is syntax of 'reference' argument?_
 
 1. Complete the required [`phone_number`](/#phone-number) and [`template_id`](#template-id) arguments.
 
@@ -61,7 +60,7 @@ _QP: What is syntax of 'reference' argument?_
 
 #### phone_number
 
-The phone number of the recipient of the text message.
+The phone number of the recipient of the text message. This number can be UK or international.
 
 #### template_id
 
@@ -78,7 +77,7 @@ If a template has placeholder fields for personalised information such as name o
 ```python
 personalisation={
     'first_name': 'Amala',
-    'reference_number': '300241',
+    'application_date': '2018-01-01',
 }
 ```
 
@@ -108,13 +107,13 @@ If the request to the client is successful, you will receive the following `dict
 
 ```python
 {
-  "id": "NOTIFICATION ID",
+  "id": "NOTIFICATION_ID",
   "reference": "REFERENCE",
   "content": {
     "body": "MESSAGE TEXT",
-    "from_number": "NUMBER"
+    "from_number": "SENDER"
   },
-  "uri": "https://api.notifications.service.gov.uk/v2/notifications/NOTIFICATION-ID",
+  "uri": "https://api.notifications.service.gov.uk/v2/notifications/NOTIFICATION_ID",
   "template": {
     "id": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
     "version": 1,
@@ -122,7 +121,6 @@ If the request to the client is successful, you will receive the following `dict
   }
 }
 ```
-_QP: What is the syntax of NOTIFICATION ID and REFERENCE?_
 
 If you are using the [test API key](/#test), all your messages will come back as delivered.
 
@@ -140,8 +138,6 @@ If the request is not successful, the client will raise an `HTTPError`:
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](/#service-limits) for the limit number|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient using a team-only API key"`<br>`]}`||
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`||
-
-_QP: What other error codes are there?_
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -238,8 +234,6 @@ If the request to the client is successful, you will receive the following `dict
 }
 ```
 
-_QP: WHAT IS THE SYNTAX FOR NOTIFICATION ID AND REFERENCE?_
-
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
 ### Error codes
@@ -275,8 +269,6 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
         reference='REFERENCE' #???
     )
     ```
-
-_QP: WHAT IS THE SYNTAX OF REFERENCE?_
 
 1. Complete the required [`template_id`](/#send-a-letter-required-arguments-template-id) argument.
 1. Complete the required [`personalisation`](/#send-a-letter-required-arguments-personalisation) arguments (the code example above only includes the required parameters).
@@ -358,8 +350,6 @@ If the request to the client is successful, you will receive the following `dict
   "scheduled_for": None
 }
 ```
-
-_QP: WHAT IS THE SYNTAX OF NOTIFICATION_ID AND REFERENCE?_
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -462,8 +452,6 @@ If the request to the client is successful, you will receive the following `dict
 	"completed_at:" "date the notification is delivered or failed" # optional
 }
 ```
-
-_QP: WHAT IS THE SYNTAX OF NOTIFICATION ID AND REFERENCE?_
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -614,7 +602,7 @@ If the request to the client is successful, you will receive a `dict` response.
   }
 }
 ```
-_QP: WHAT IS THE SYNTAX OF NOTIFICATION ID AND REFERENCE?_
+
 
 #### One page of up to 250 messages
 
@@ -679,8 +667,6 @@ If the request to the client is successful, you will receive a `dict` response.
 }
 ```
 
-_QP: What are the created_at and updated_at fields?_
-
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
 ### Error codes
@@ -742,7 +728,6 @@ If the request to the client is successful, you will receive a `dict` response.
     "subject": "Subject of an email or letter notification, or None if an sms message"
 }
 ```
-_QP: WHAT ARE THE CREATED AT AND UPDATED AT FIELDS?_
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -810,8 +795,6 @@ If the request to the client is successful, you will receive a `dict` response.
     ]
 }
 ```
-
-_QP: Required in response? created_at? updated_at?_
 
 If no templates exist for a template type or there no templates for a service, you will receive a `dict` response with an empty `templates` list element:
 
