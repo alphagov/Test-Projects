@@ -33,18 +33,18 @@ GOV.UK Notify enables you to send text messages, emails and letters.
 ### Method
 
 1. Add the following method to your application code:
-
-    ```python
+    
+     ```python
     response = notifications_client.send_sms_notification(
-        phone_number='07XXXXXXXXX', # required string - for example 07967346238
-        template_id='XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX', # required string - for example 2956cbb0-5e1f-4341-9334-cbc097b86d8a
+        phone_number='+447900900123', # required string
+        template_id='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
         personalisation={
             'KEY': 'VALUE',
             'KEY': 'VALUE',
             ...
-            }, # optional dict
-        reference='REFERENCE', # optional string - identifies the notification(s)
-        sms_sender_id='XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX' # £ optional string - for example 8e222534-7f05-4972-86e3-17c5d9f894e2
+            }, # optional dict - specifies template parameters
+        reference='STRING', # optional string - identifies notification(s)
+        sms_sender_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
     )
     ```
 
@@ -107,17 +107,17 @@ If the request to the client is successful, you will receive the following `dict
 
 ```python
 {
-  "id": "NOTIFICATION_ID",
-  "reference": "REFERENCE",
+  "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
+  "reference": "STRING",
   "content": {
     "body": "MESSAGE TEXT",
     "from_number": "SENDER"
   },
-  "uri": "https://api.notifications.service.gov.uk/v2/notifications/NOTIFICATION_ID",
+  "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
   "template": {
-    "id": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-    "version": 1,
-    "uri": "https://api.notifications.service.gov.uk/v2/template/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+    "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a',
+    "version": INTEGER,
+    "uri": "https://api.notifications.service.gov.uk/v2/template/ceb50d92-100d-4b8b-b559-14fa3b091cd"
   }
 }
 ```
@@ -146,20 +146,21 @@ If the request is not successful, the client will raise an `HTTPError`:
 ### Method
 
 1. Add the following method to your application:
-
-	   ```python
+	    
+	    ```python
 	    response = notifications_client.send_email_notification(
-		email_address='EMAIL ADDRESS', # for example sender@something.com
-		template_id='XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX', # for example 2956cbb0-5e1f-4341-9334-cbc097b86d8a
+		email_address='sender@something.com', # required string
+		template_id='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
 		personalisation={
 		    'KEY': 'VALUE',
 		    'KEY': 'VALUE',
 		    ...
-		    },,
-		reference='REFERENCE', #???
-		email_reply_to_id='XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX' # for example 8e222534-7f05-4972-86e3-17c5d9f894e2
+		    }, # optional dict - specifies template parameters
+		reference='STRING', # optional string - identifies notification(s)
+		email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 	    )
 	    ```
+
 	    
 1. Complete the required [`email_address`](/#email-address) and [`template_id`](#send-an-email-required-arguments-template-id) arguments.
 
@@ -190,7 +191,7 @@ If a template has placeholder fields for personalised information such as name o
 ```python
 personalisation={
     'first_name': 'Amala',
-    'reference_number': '300241',
+    'application_date': '2018-01-01',
 }
 ```
 
@@ -218,21 +219,21 @@ If the request to the client is successful, you will receive the following `dict
 
 ```python
 {
-  "id": "NOTIFICATION ID",
-  "reference": "REFERENCE",
+  "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
+  "reference": "STRING",
   "content": {
     "subject": "SUBJECT TEXT",
     "body": "MESSAGE TEXT",
-    "from_email": "FROM EMAIL ADDRESS"
+    "from_email": "SENDER EMAIL"
   },
-  "uri": "https://api.notifications.service.gov.uk/v2/notifications/NOTIFICATION_ID",
+  "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
   "template": {
-    "id": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-    "version": 1,
-    "uri": "https://api.notifications.service.gov.uk/v2/template/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+    "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
+    "version": INTEGER,
+    "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
   }
-}
-```
+  }
+  ```
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -256,17 +257,17 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
 ### Method
 
 1. Add the following method to your application:
-
+    
     ```python
     response = notifications_client.send_letter_notification(
-        template_id='XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX', #2956cbb0-5e1f-4341-9334-cbc097b86d8a
+        template_id='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
         personalisation={
-          'address_line_1': 'ADDRESS LINE 1' #The Occupuier',
-          'address_line_2': 'ADDRESS LINE 2' #123 High Street',
-          'postcode': 'POSTCODE' #SW14 6BH',
+          'address_line_1': 'The Occupier' # required string,
+          'address_line_2': '123 High Street' # required string,
+          'postcode': 'SW14 6BH' # required string,
           ...
         },
-        reference='REFERENCE' #???
+        reference=’STRING’ # optional string - identifies notification(s)
     )
     ```
 
@@ -325,8 +326,6 @@ personalisation={
 }
 ```
 
-_QP: parameter? variable? placeholder?_
-
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
 ### Response
@@ -335,17 +334,17 @@ If the request to the client is successful, you will receive the following `dict
 
 ```python
 {
-  "id": "NOTIFICATION_ID",
-  "reference": 'REFERENCE',
+  "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
+  "reference": 'STRING',
   "content": {
     "subject": "SUBJECT TEXT",
     "body": "LETTER TEXT",
   },
-  "uri": "https://api.notifications.service.gov.uk/v2/notifications/NOTIFICATION_ID",
+  "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
   "template": {
-    "id": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-    "version": 1,
-    "uri": "https://api.notifications.service.gov.uk/v2/template/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+    "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
+    "version": INTEGER,
+    "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
   }
   "scheduled_for": None
 }
@@ -427,31 +426,32 @@ If the request to the client is successful, you will receive the following `dict
 
 ```python
 {
-  "id": "NOTIFICATION ID", # required
-  "reference": "CLIENT REFERENCE", # optional
-  "email_address": "EMAIL ADDRESS",  # required for emails
-  "phone_number": "PHONE NUMBER",  # required for sms
-  "line_1": "ADDRESS LINE 1", # required for letter - name of person or company
-  "line_2": "ADDRESS LINE 2", # required for letter
-  "line_3": "ADDRESS LINE 3", # optional
-  "line_4": "ADDRESS LINE 4", # optional
-  "line_5": "ADDRESS LINE 5", # optional
-  "line_6": "ADDRESS LINE 6", # optional
-  "postcode": "POSTCODE", # required for letter
-  "type": "TYPE", # required - sms / letter / email
-  "status": "CURRENT STATUS", # required - sending / delivered / permanent-failure / temporary-failure / technical-failure
+  "id": "740e5834-3a29-46b4-9a6f-16142fde533a", # required string - notification ID
+  "reference": "STRING", # optional string
+  "email_address": "sender@something.com",  # required string for emails
+  "phone_number": "+447900900123",  # required string for text messages
+  "line_1": "ADDRESS LINE 1", # required string for letter
+  "line_2": "ADDRESS LINE 2", # required string for letter
+  "line_3": "ADDRESS LINE 3", # optional string for letter
+  "line_4": "ADDRESS LINE 4", # optional string for letter
+  "line_5": "ADDRESS LINE 5", # optional string for letter
+  "line_6": "ADDRESS LINE 6", # optional string for letter
+  "postcode": "STRING", # required string for letter
+  "type": "sms / letter / email", # required string
+  "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
   "template": {
-    "version": X # required template version number
-    "id": `XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX` # required template id
+    "Version": INTEGER # required string - template version
+    "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
     "uri": "/v2/template/{id}/{version}", # required
   },
-  "body": "Body of the notification",
-  "subject": "Subject of an email notification or None if an sms message"
-	"created_at": "created at", # required
-	"sent_at": " sent to provider at", # optional
-	"completed_at:" "date the notification is delivered or failed" # optional
+  "body": "STRING", # required string - body of notification
+  "subject": "STRING" # required string for email - subject of email
+	"created_at": "STRING", # required string - date and time notification created
+	"sent_at": "STRING", # optional string - date and time notification sent to provider
+	"completed_at:" "STRING" # optional string - date and time notification delivered or failed
 }
 ```
+
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -570,29 +570,29 @@ If the request to the client is successful, you will receive a `dict` response.
 {"notifications":
   [
     {
-      "id": "NOTIFICATION ID", # required
-      "reference": "CLIENT REFERENCE", # optional
-      "email_address": "EMAIL ADDRESS",  # required for emails
-      "phone_number": "PHONE NUMBER",  # required for sms
-      "line_1": "ADDRESS LINE 1", # required for letter - name of person or company
-      "line_2": "ADDRESS LINE 2", # required for letter
-      "line_3": "ADDRESS LINE 3", # optional
-      "line_4": "ADDRESS LINE 4", # optional
-      "line_5": "ADDRESS LINE 5", # optional
-      "line_6": "ADDRESS LINE 6", # optional
-      "postcode": "POSTCODE", # required for letter
-      "type": "TYPE", # required - sms / letter / email
-      "status": "CURRENT STATUS", # required - sending / delivered / permanent-failure / temporary-failure / technical-failure
+      "id": "740e5834-3a29-46b4-9a6f-16142fde533a", # required string - notification ID
+      "reference": "STRING", # optional string - client reference
+      "email_address": "sender@something.com",  # required string for emails
+      "phone_number": "+447900900123",  # required string for text messages
+      "line_1": "ADDRESS LINE 1", # required string for letter
+      "line_2": "ADDRESS LINE 2", # required string for letter
+      "line_3": "ADDRESS LINE 3", # optional string for letter
+      "line_4": "ADDRESS LINE 4", # optional string for letter
+      "line_5": "ADDRESS LINE 5", # optional string for letter
+      "line_6": "ADDRESS LINE 6", # optional string for letter
+      "postcode": "STRING", # required for string letter
+      "type": "sms / letter / email", # required string
+      "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
       "template": {
-        "version": x # required template version number
-        "id": `XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX` # required template id
+        "version": NUMBER # required string - template version
+        "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
         "uri": "/v2/template/{id}/{version}", # required
       },
-      "body": "Body of the notification",
-      "subject": "Subject of an email notification or None if an sms message"
-      "created_at": "created at", # required
-      "sent_at": " sent to provider at", # optional
-      "completed_at:" "date the notification is delivered or failed" # optional
+      "body": "STRING", # required string - body of notification
+      "subject": "STRING" # required string for email - subject of email
+      "created_at": "STRING", # required string - date and time notification created
+      "sent_at": " STRING", # optional string - date and time notification sent to provider
+      "Completed_at: "STRING" # optional string - date and time notification delivered or failed
     },
     …
   ],
@@ -602,7 +602,6 @@ If the request to the client is successful, you will receive a `dict` response.
   }
 }
 ```
-
 
 #### One page of up to 250 messages
 
@@ -635,7 +634,7 @@ Add the following method to your application code, completing the required [`tem
 
 ```python
 response = notifications_client.get_template(
-  'template_id'
+  `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
 )
 ```
 
@@ -656,14 +655,14 @@ If the request to the client is successful, you will receive a `dict` response.
 
 ```python
 {
-    "id": "template_id", # required - XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-    "type": "TYPE" , # required - sms / email / letter
-    "created_at": "CREATED AT", # required
-    "updated_at": "UPDATED AT", # required
-    "version": "VERSION", # integer required
-    "created_by": "someone@example.com", # email required
-    "body": "Body of the notification", # required
-    "subject": "Subject of an email or letter notification or None if an sms message"
+    "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
+    "type": "sms / email / letter" , # required string
+    "created_at": "STRING", # required string - date and time template created
+    "updated_at": "STRING", # required string - date and time template last updated
+    "version": NUMBER, # required string - template version
+    "created_by": "someone@example.com", # required string
+    "body": "STRING", # required string - body of notification
+    "subject": "STRING" # required string for email - subject of email
 }
 ```
 
@@ -691,8 +690,8 @@ Add the following method to your application code, completing the [`template_id`
 
 ```python
 response = notifications_client.get_template_version(
-    'template_id',
-    'version' # integer required for version number
+    `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
+    ‘version’: NUMBER, # required string - template version
 )
 ```
 
@@ -716,18 +715,20 @@ The version number of the template.
 
 If the request to the client is successful, you will receive a `dict` response.
 
+
 ```python
 {
-    "id": "template_id", # XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-    "type": "TYPE", # required - "sms" / "email" / "letter"
-    "created_at": "created at", # required
-    "updated_at": "updated at", # required
-    "version": "VERSION", # integer required
-    "created_by": "EMAIL", # email required
-    "body": "Body of the notification", # required
-    "subject": "Subject of an email or letter notification, or None if an sms message"
+    "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
+    "type": "sms / email / letter" , # required string
+    "created_at": "STRING", # required string - date and time template created
+    "updated_at": "STRING", # required string - date and time template last updated
+    "version": NUMBER, # required string - template version
+    "created_by": "someone@example.com", # required string
+    "body": "STRING", # required string - body of notification
+    "subject": "STRING" # required string for email - subject of email
 }
 ```
+
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -752,7 +753,7 @@ Add the following method to your application code:
 
 ```python
 response = notifications_client.get_all_templates(
-    template_type="TYPE" # optional - "email" / "sms" / "letter"
+    template_type="sms / letter / email" # optional string
 )
 ```
 
@@ -780,17 +781,17 @@ If the request to the client is successful, you will receive a `dict` response.
 {
     "templates": [
         {
-            "id": "template_id", # required - XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-            "type": "TYPE", # required - "sms" / "email" / "letter"
-            "created_at": "CREATED AT", # required
-            "updated_at": "UPDATED AT", # required
-            "version": "VERSION", # integer required
-            "created_by": "EMAIL", # email required
-            "body": "Body of the notification", # required
-            "subject": "Subject of an email or letter notification, or None if an sms message"
+            "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
+    		"type": "sms / email / letter" , # required string
+    		"created_at": "STRING", # required string - date and time template created
+    		"updated_at": "STRING", # required string - date and time template last updated
+    		"version": NUMBER, # required string - template version
+    		"created_by": "someone@example.com", # required string
+    		"body": "STRING", # required string - body of notification
+    		"subject": "STRING" # required string for email - subject of email
         },
         {
-            ... another template
+            ...another template
         }
     ]
 }
@@ -815,14 +816,15 @@ This will generate a preview version of a template.
 
 Add the following method to your application code, completing the required [`template_id`](/#generate-a-preview-template-required-arguments-template-id) and [`personalisation`](/#generate-a-preview-template-required-arguments-personalisation) arguments:
 
+
 ```Python
 response = notifications_client.post_template_preview(
-    'template_id',
+    'template_id'='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
     personalisation={
         'KEY': 'VALUE',
         'KEY': 'VALUE',
         ...
-        },
+        }, # required dict - specifies template parameters
 )
 ```
 
@@ -845,7 +847,7 @@ If a template has placeholder fields for personalised information such as name o
 ```python
 personalisation={
     'first_name': 'Amala',
-    'reference_number': '300241',
+    'application_date': '2018-01-01',
 }
 ```
 
@@ -857,11 +859,11 @@ If the request to the client is successful, you will receive a `dict` response.
 
 ```python
 {
-    "id": "notification_id", # required
-    "type": "TYPE", # required - "sms" / "email" / "letter"
-    "version": "VERSION", # integer required
-    "body": "Body of the notification", # required
-    "subject": "Subject of an email or letter notification, or None if an sms message"
+    "id": "740e5834-3a29-46b4-9a6f-16142fde533a", # required string - notification ID
+    "type": "sms / email / letter" , # required string
+    "version": NUMBER, # required string - template version
+    "body": "STRING", # required string - body of notification
+    "subject": "STRING" # required string for email - subject of email
 }
 ```
 
@@ -947,12 +949,12 @@ If the request to the client is successful, you will receive a `dict` response.
   "received_text_messages":
   [
     {
-      "id": "ID of the received text message", # required
-      "user_number": "user number", # required user number
-      "notify_number": "notify number", # receiving number
-      "created_at": "created at", # required
-      "service_id": "service id", # required service id
-      "content": "text content" # required text content
+      "id": "STRING", # required string - ID of received text message
+      "user_number": "STRING", # required string
+      "notify_number": "STRING", # required string - receiving number
+      "created_at": "STRING", # required string - date and time template created
+      "service_id": "STRING", # required string - service ID
+      "content": "STRING" # required string - text content
     },
     …
   ],
@@ -962,5 +964,6 @@ If the request to the client is successful, you will receive a `dict` response.
   }
 }
 ```
+
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
