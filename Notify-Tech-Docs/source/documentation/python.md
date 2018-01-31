@@ -33,7 +33,7 @@ GOV.UK Notify enables you to send text messages, emails and letters.
 ### Method
 
 1. Add the following method to your application code:
-    
+
      ```python
     response = notifications_client.send_sms_notification(
         phone_number='+447900900123', # required string
@@ -116,7 +116,7 @@ If the request to the client is successful, you will receive the following `dict
   "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
   "template": {
     "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a',
-    "version": INTEGER,
+    "version": NUMBER,
     "uri": "https://api.notifications.service.gov.uk/v2/template/ceb50d92-100d-4b8b-b559-14fa3b091cd"
   }
 }
@@ -134,10 +134,13 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 |`error.status_code`|`error.message`|Notes|
 |:---|:---|:---|
-|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`||
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of API key, refer to [API keys](/#api-keys) for more information|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Refer to [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode) for more information|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](/#api-rate-limits) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](/#service-limits) for the limit number|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient using a team-only API key"`<br>`]}`||
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`||
+|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -146,9 +149,9 @@ If the request is not successful, the client will raise an `HTTPError`:
 ### Method
 
 1. Add the following method to your application:
-	    
-	    ```python
-	    response = notifications_client.send_email_notification(
+
+	 ```python
+	  response = notifications_client.send_email_notification(
 		email_address='sender@something.com', # required string
 		template_id='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
 		personalisation={
@@ -158,10 +161,10 @@ If the request is not successful, the client will raise an `HTTPError`:
 		    }, # optional dict - specifies template parameters
 		reference='STRING', # optional string - identifies notification(s)
 		email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
-	    )
-	    ```
+	  )
+	 ```
 
-	    
+
 1. Complete the required [`email_address`](/#email-address) and [`template_id`](#send-an-email-required-arguments-template-id) arguments.
 
 1. Complete the optional  [`personalisation`](/#send-an-email-optional-arguments-personalisation), [`reference`](/#send-an-email-optional-arguments-reference) and [`email_reply_to_id`](/#email-reply-to-id) arguments if required.
@@ -229,7 +232,7 @@ If the request to the client is successful, you will receive the following `dict
   "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
   "template": {
     "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
-    "version": INTEGER,
+    "version": NUMBER,
     "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
   }
   }
@@ -243,10 +246,13 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 |`error.status_code`|`error.message`|Notes|
 |:---|:---|:---|
-|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`||
-|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT) for today"`<br>`}]`|Refer to [service limits](/#service-limits) for the limit number|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient using a team-only API key"`<br>`]}`||
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can"t send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`||
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of API key, refer to [API keys](/#api-keys) for more information|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Refer to [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode) for more information|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](/#api-rate-limits) for more information|
+|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](/#service-limits) for the limit number|
+|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -257,8 +263,8 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
 ### Method
 
 1. Add the following method to your application:
-    
-    ```python
+
+```python
     response = notifications_client.send_letter_notification(
         template_id='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
         personalisation={
@@ -269,7 +275,7 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
         },
         reference=’STRING’ # optional string - identifies notification(s)
     )
-    ```
+```
 
 1. Complete the required [`template_id`](/#send-a-letter-required-arguments-template-id) argument.
 1. Complete the required [`personalisation`](/#send-a-letter-required-arguments-personalisation) arguments (the code example above only includes the required parameters).
@@ -293,7 +299,7 @@ The personalisation argument always contains the following required parameters f
 - `address_line_2`
 - `postcode`
 
-Any variables / placeholders (_QP: Which one?_) included in the letter template also count as required parameters. You need to provide their values in a dictionary with key value pairs:
+Any other placeholder fields included in the letter template also count as required parameters. You need to provide their values in a dictionary with key value pairs. For example:
 
 ```python
 personalisation={
@@ -343,7 +349,7 @@ If the request to the client is successful, you will receive the following `dict
   "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
   "template": {
     "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
-    "version": INTEGER,
+    "version": NUMBER,
     "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
   }
   "scheduled_for": None
@@ -358,11 +364,15 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 |`error.status_code`|`error.message`|Notes|
 |:---|:---|:---|
-|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`||
-|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT) for today"`<br>`}]`|Refer to [service limits](/#service-limits) for the limit number|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`||
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`||
-|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`||
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of API key, refer to [API keys](/#api-keys) for more information|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Refer to [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode) for more information|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personlisation](/#send-a-letter-required-arguments-personalisation) for more information.|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
+|`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](/#api-rate-limits) for more information|
+|`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](/#service-limits) for the limit number|
+|`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
+
 
 # Get message status
 
@@ -440,7 +450,7 @@ If the request to the client is successful, you will receive the following `dict
   "type": "sms / letter / email", # required string
   "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
   "template": {
-    "Version": INTEGER # required string - template version
+    "Version": NUMBER # required string - template version
     "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
     "uri": "/v2/template/{id}/{version}", # required
   },
@@ -459,10 +469,12 @@ If the request to the client is successful, you will receive the following `dict
 
 If the request is not successful, the client will raise an `HTTPError`:
 
-|`error.status_code`|`error.message`|
-|:---|:---|
-|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|
-|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|
+|`error.status_code`|`error.message`|Notes|
+|:---|:---|:---|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "id is not a valid UUID"`<br>`}]`|Check the notification ID|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|Check the notification ID|
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -592,7 +604,7 @@ If the request to the client is successful, you will receive a `dict` response.
       "subject": "STRING" # required string for email - subject of email
       "created_at": "STRING", # required string - date and time notification created
       "sent_at": " STRING", # optional string - date and time notification sent to provider
-      "Completed_at: "STRING" # optional string - date and time notification delivered or failed
+      "Completed_at": "STRING" # optional string - date and time notification delivered or failed
     },
     …
   ],
@@ -615,10 +627,12 @@ If the request to the client is successful, you will receive a `dict` response.
 
 If the request is not successful, the client will raise an `HTTPError`:
 
-|`error.status_code`|`error.message`|
-|:---|:---|
+|`error.status_code`|`error.message`||
+|:---|:---|:---|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]"`<br>`}]`|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Apple is not one of [sms, email, letter]"`<br>`}]`|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -630,7 +644,7 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 This will return the latest version of the template.
 
-Add the following method to your application code, completing the required [`template_id`](/#arguments-template-id) argument:
+Add the following method to your application code, completing the required [`template_id`](/#get-a-template-by-id-method-template-id) argument:
 
 ```python
 response = notifications_client.get_template(
@@ -672,9 +686,11 @@ If the request to the client is successful, you will receive a `dict` response.
 
 If the request is not successful, the client will raise an `HTTPError`:
 
-|`error.status_code`|`error.message`|
-|:---|:---|
-|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|
+|`error.status_code`|`error.message`|Notes|
+|:---|:---|:---|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|Check your [template ID](/#arguments-template-id)|
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -736,9 +752,11 @@ If the request to the client is successful, you will receive a `dict` response.
 
 If the request is not successful, the client will raise an `HTTPError`:
 
-|`error.status_code`|`error.message`|
-|:---|:---|
-|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|
+|`error.status_code`|`error.message`|Notes|
+|:---|:---|:---|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
+|`404`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No Result Found"`<br>`}]`|Check your [template ID](/#get-a-template-by-id-and-version-required-arguments-template-id) and [version](/#version)|
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -817,7 +835,7 @@ This will generate a preview version of a template.
 Add the following method to your application code, completing the required [`template_id`](/#generate-a-preview-template-required-arguments-template-id) and [`personalisation`](/#generate-a-preview-template-required-arguments-personalisation) arguments:
 
 
-```Python
+```python
 response = notifications_client.post_template_preview(
     'template_id'='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
     personalisation={
@@ -873,10 +891,12 @@ If the request to the client is successful, you will receive a `dict` response.
 
 If the request is not successful, the client will raise an `HTTPError`:
 
-|`error.status_code`|`error.message`|
-|:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Missing personalisation: [PERSONALISATION FIELD]"`<br>`}]`|
-|`400`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|
+|`error.status_code`|`error.message`|Notes|
+|:---|:---|:---|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Missing personalisation: [PERSONALISATION FIELD]"`<br>`}]`|Check that the personalisation arguments in the method match the placeholder fields in the template|
+|`400`|`[{`<br>`"error": "NoResultFound",`<br>`"message": "No result found"`<br>`}]`|Check the [template ID](/#generate-a-preview-template-required-arguments-template-id)|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
