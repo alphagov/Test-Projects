@@ -56,21 +56,17 @@ GOV.UK Notify enables you to send text messages, emails and letters.
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
-### Required arguments
+### Arguments
 
-#### phone_number
+#### phone_number (required)
 
 The phone number of the recipient of the text message. This number can be UK or international.
 
-#### template_id
+#### template_id (required)
 
 The ID of the template. You can find this by logging into [GOV.UK Notify](https://www.notifications.service.gov.uk/) and going to the _Templates_ page.
 
-[Back to top](/#gov-uk-notify-technical-documentation-python)
-
-### Optional arguments
-
-#### personalisation
+#### personalisation (optional)
 
 If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values in a dictionary with key value pairs. For example:
 
@@ -81,11 +77,11 @@ personalisation={
 }
 ```
 
-#### reference
+#### reference (optional)
 
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
-#### sms_sender_id
+#### sms_sender_id (optional)
 
 A unique identifier of the sender of the text message notification. To set this up:
 
@@ -173,21 +169,17 @@ You are now ready to send an email notification. Run your application to send a 
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
-### Required arguments
+### Arguments
 
-#### email_address
+#### email_address (required)
 
 The email address of the recipient, only required for email notifications.
 
-#### template_id
+#### template_id (required)
 
 The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
 
-[Back to top](/#gov-uk-notify-technical-documentation-python)
-
-### Optional arguments
-
-#### personalisation
+#### personalisation (optional)
 
 If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values in a dictionary with key value pairs. For example:
 
@@ -198,11 +190,11 @@ personalisation={
 }
 ```
 
-#### reference
+#### reference (optional)
 
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
-#### email_reply_to_id
+#### email_reply_to_id (optional)
 
 This is an email reply-to address specified by you to receive replies from your users. Your service cannot go live until at least one email address has been set up for this. To set up:
 
@@ -285,13 +277,13 @@ You are now ready to send a letter notification. Run your application to send a 
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
-### Required arguments
+### Arguments
 
-#### template_id
+#### template_id (required)
 
 The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
 
-#### personalisation
+#### personalisation (required)
 
 The personalisation argument always contains the following required parameters for the letter recipient's address:
 
@@ -311,15 +303,11 @@ personalisation={
 }
 ```
 
-[Back to top](/#gov-uk-notify-technical-documentation-python)
-
-### Optional arguments
-
-#### reference
+#### reference (optional)
 
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
-#### personalisation
+#### personalisation (optional)
 
 The following parameters in the letter recipient's address are optional:
 
@@ -422,9 +410,9 @@ You are now ready to get the status of the notification. Run your application to
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
-### Required arguments
+### Arguments
 
-#### notification_id
+#### notification_id (required)
 
 The ID of the notification.
 
@@ -536,11 +524,11 @@ Run your application to send a request to the API notification client. It will r
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
-### Optional arguments
+### Arguments
 
 You can omit any of these arguments to ignore these filters.
 
-#### template_type
+#### template_type (optional)
 
 You can filter by:
 
@@ -548,7 +536,7 @@ You can filter by:
 * sms
 * letter
 
-#### status
+#### status (optional)
 
 | status | description | text | email | letter |
 |:--- |:--- |:--- |:--- |:--- |
@@ -560,11 +548,11 @@ You can filter by:
 |technical-failure|Email / Text: Notify had a technical failure; you can try to send the message again. <br><br>Letter: Notify had an unexpected error while sending to our printing provider. <br><br>You can omit this argument to ignore this filter.|Yes|Yes||
 |accepted|Notify is printing and posting the letter|||Yes|
 
-#### reference
+#### reference (optional)
 
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
-#### older_than
+#### older_than (optional)
 
 Input the ID of a notification into this argument. If you use this argument, the next 250 received notifications older than the given ID are returned.
 
@@ -656,8 +644,9 @@ Run your application to send a request to the API Notification client.
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
+### Arguments
 
-#### template_id
+#### template_id (required)
 
 The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
 
@@ -715,13 +704,13 @@ Run your application to send a request to the API notification client.
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
-### Required arguments
+### Arguments
 
-#### template_id
+#### template_id (required)
 
 The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
 
-#### version
+#### version (required)
 
 The version number of the template.
 
@@ -744,7 +733,6 @@ If the request to the client is successful, you will receive a `dict` response.
     "subject": "STRING" # required string for email - subject of email
 }
 ```
-
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
@@ -779,9 +767,9 @@ Run your application to send a request to the API notification client.
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
-### Optional arguments
+### Arguments
 
-#### template_type
+#### template_type (optional)
 
 If omitted all templates are returned. Otherwise you can filter by:
 
@@ -852,13 +840,13 @@ Run your application to send a request to the API notification client
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
-### Required arguments
+### Arguments
 
-#### template_id
+#### template_id (required)
 
 The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
 
-#### personalisation
+#### personalisation (required)
 
 If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values in a dictionary with key value pairs. For example:
 
@@ -949,9 +937,9 @@ Run your application to send a request to the API notification client.
 
 [Back to top](/#gov-uk-notify-technical-documentation-python)
 
-### Optional arguments
+### Arguments
 
-#### older_than
+#### older_than (optional)
 
 Input the ID of a received text message into this argument. If you use this argument, the next 250 received text messages older than the given ID are returned.
 
