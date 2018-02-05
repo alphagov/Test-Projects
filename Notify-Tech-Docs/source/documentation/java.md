@@ -77,10 +77,14 @@ _QP: This link takes you to some code that looks the same as the code in the Mav
 
 Add this code to your application:
 
-```python
-from notifications_python_client.notifications import NotificationsAPIClient
+```java
+import uk.gov.service.notify.NotificationClient;
+import uk.gov.service.notify.Notification;
+import uk.gov.service.notify.NotificationList;
+import uk.gov.service.notify.SendEmailResponse;
+import uk.gov.service.notify.SendSmsResponse;
 
-notifications_client = NotificationsAPIClient(api_key)
+NotificationClient client = new NotificationClient(apiKey);
 ```
 
 To get an API key, [log in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the _API integration_ page. Information on API keys can be found [here](/#api-keys).
