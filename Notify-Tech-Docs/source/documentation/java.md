@@ -80,10 +80,14 @@ Refer to the [client change log](https://github.com/alphagov/notifications-java-
 
 Add this code to your application:
 
-```python
-from notifications_python_client.notifications import NotificationsAPIClient
+```java
+import uk.gov.service.notify.NotificationClient;
+import uk.gov.service.notify.Notification;
+import uk.gov.service.notify.NotificationList;
+import uk.gov.service.notify.SendEmailResponse;
+import uk.gov.service.notify.SendSmsResponse;
 
-notifications_client = NotificationsAPIClient(api_key)
+NotificationClient client = new NotificationClient(apiKey);
 ```
 
 To get an API key, [log in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the _API integration_ page. More information can be found in the [API keys](/#api-keys) section.
@@ -96,43 +100,45 @@ GOV.UK Notify enables you to send text messages, emails and letters.
 
 ### Method
 
-```python
-response = notifications_client.send_email_notification(
-    email_address='sender@something.com', # required string
-    template_id='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
-)
+```java
+  Map<String, String> personalisation = new HashMap<>();
+  personalisation.put("name", "Jo");
+  personalisation.put("reference_number", "13566");
+  SendSmsResponse response = client.sendSms(mobileNumber, templateId, personalisation, "yourReferenceString", emailReplyToId);
 ```
+  _QP: Assume that emailReplyToId is incorrect in text message section?_
+  _QP: Should we have name and reference_number in this example or are they optional?_
+  _QP: How does reference_number relate to yourReferenceString?_
+  _QP: Is smsSenderId anywhere?_
 
 ### Arguments
 
-#### phone_number (required)
+#### mobileNumber (required)
 
 The phone number of the recipient of the text message. This number can be UK or international.
 
-#### template_id (required)
+#### templateId (required)
 
 The ID of the template. You can find this by logging into [GOV.UK Notify](https://www.notifications.service.gov.uk/) and going to the _Templates_ page.
 
 #### personalisation (optional)
 
-If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values in a dictionary with key value pairs. For example:
+If a template has placeholder fields for personalised information such as name or reference number, you need to __provide their values in a dictionary with key value pairs__. For example:
 
-```python
-personalisation={
-    'first_name': 'Amala',
-    'application_date': '2018-01-01',
-}
+```java
+Map<String, String> personalisation = new HashMap<>();
+personalisation.put("name", "Jo");
+personalisation.put("reference_number", "13566");
 ```
+_QP: Is this a dict or is it something else?_
 
-#### reference (optional)
+#### "yourReferenceString" (optional)
 
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
-```python
-reference='STRING', # optional string - identifies notification(s)
-```
+_Example?_
 
-#### sms_sender_id (optional)
+#### smsSenderId (optional)
 
 A unique identifier of the sender of the text message notification. To set this up:
 
@@ -144,9 +150,7 @@ A unique identifier of the sender of the text message notification. To set this 
   - copy the ID of the sender you want to use and paste it into the method
   - click _Change_ to change the default sender that the service will use, and click _Save_
 
-```python
-sms_sender_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
-```
+`example?`
 
 If you omit this argument from your method, the default `sms_sender_id` will be set for the notification.
 
@@ -154,21 +158,14 @@ If you omit this argument from your method, the default `sms_sender_id` will be 
 
 If the request to the client is successful, you will receive the following `dict` response:
 
-```python
-{
-  "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
-  "reference": "STRING",
-  "content": {
-    "body": "MESSAGE TEXT",
-    "from_number": "SENDER"
-  },
-  "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
-  "template": {
-    "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a',
-    "version": NUMBER,
-    "uri": "https://api.notifications.service.gov.uk/v2/template/ceb50d92-100d-4b8b-b559-14fa3b091cd"
-  }
-}
+```java
+   UUID notificationId;
+   Optional<String> reference;
+   UUID templateId;
+   int templateVersion;
+   String templateUri;
+   String body;
+   Optional<String> fromNumber;
 ```
 
 If you are using the [test API key](/#test), all your messages will come back as delivered.
@@ -178,6 +175,8 @@ All successfully delivered messages will appear on your dashboard.
 ### Error codes
 
 If the request is not successful, the client will raise an `HTTPError`:
+
+_UPDATE ERROR CODES_
 
 |`error.status_code`|`error.message`|Notes|
 |:---|:---|:---|
@@ -193,20 +192,20 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 ### Method
 
-```python
-response = notifications_client.send_email_notification(
-    email_address='sender@something.com', # required string
-    template_id='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
-)
+```java
+  HashMap<String, String> personalisation = new HashMap<>();
+  personalisation.put("name", "Jo");
+  personalisation.put("reference_number", "13566");
+  SendEmailResponse response = client.sendEmail(templateId, emailAddress, personalisation, reference, emailReplyToId);
 ```
 
 ### Arguments
 
-#### email_address (required)
+#### emailAddress (required)
 
 The email address of the recipient, only required for email notifications.
 
-#### template_id (required)
+#### templateId (required)
 
 The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
 
@@ -214,22 +213,21 @@ The ID of the template. You can find this by logging into GOV.UK Notify and goin
 
 If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values in a dictionary with key value pairs. For example:
 
-```python
-personalisation={
-    'first_name': 'Amala',
-    'application_date': '2018-01-01',
-}
+```java
+Map<String, String> personalisation = new HashMap<>();
+personalisation.put("name", "Jo");
+personalisation.put("reference_number", "13566");
 ```
 
 #### reference (optional)
 
+_QP: Is it yourReferenceString or reference?_
+
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
-```python
-reference='STRING', # optional string - identifies notification(s)
-```
+_QP: example?_
 
-#### email_reply_to_id (optional)
+#### emailReplyToId (optional)
 
 This is an email reply-to address specified by you to receive replies from your users. Your service cannot go live until at least one email address has been set up for this. To set up:
 
@@ -239,9 +237,7 @@ This is an email reply-to address specified by you to receive replies from your 
 1. Go to the Email section and click _Manage_ on the "Email reply to addresses" row.
 1. Click _Change_ to specify the email address to receive replies, and click _Save_.
 
-```python
-email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
-```
+_example?_
 
 If you omit this argument, your default email reply-to address will be set for the notification.
 
@@ -249,24 +245,16 @@ If you omit this argument, your default email reply-to address will be set for t
 
 If the request to the client is successful, you will receive the following `dict` response:
 
-```python
-{
-  "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
-  "reference": "STRING",
-  "content": {
-    "subject": "SUBJECT TEXT",
-    "body": "MESSAGE TEXT",
-    "from_email": "SENDER EMAIL"
-  },
-  "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
-  "template": {
-    "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
-    "version": NUMBER,
-    "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
-  }
-  }
+```java
+	UUID notificationId;
+	Optional<String> reference;
+	UUID templateId;
+	int templateVersion;
+	String templateUri;
+	String body;
+	String subject;
+	Optional<String> fromEmail;
   ```
-
 
 ### Error codes
 
@@ -288,20 +276,27 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
 
 ### Method
 
-```python
-    response = notifications_client.send_letter_notification(
-        template_id='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
-        personalisation={
-          'address_line_1': 'The Occupier' # required string,
-          'address_line_2': '123 High Street' # required string,
-          'postcode': 'SW14 6BH' # required string,
-        },
-    )
+```java
+	HashMap<String, String> personalisation = new HashMap<>();
+	personalisation.put("address_line_1", "The Occupier"); // mandatory address field
+	personalisation.put("address_line_2", "Flat 2"); // mandatory address field
+	personalisation.put("postcode", "SW14 6BH"); // mandatory address field
+	SendLetterResponse response = client.sendLetter(templateId, personalisation, "yourReferenceString");
+```
+
+
+```java
+	personalisation.put("address_line_3", "123 High Street"); // optional address field
+	personalisation.put("address_line_4", "Richmond upon Thames"); // optional address field
+	personalisation.put("address_line_5", "London"); // optional address field
+	personalisation.put("address_line_6", "Middlesex"); // optional address field
+	personalisation.put("application_id", "1234"); // field from template
+	personalisation.put("application_date", "2017-01-01"); // field from template
 ```
 
 ### Arguments
 
-#### template_id (required)
+#### templateId (required)
 
 The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
 
@@ -315,17 +310,11 @@ The personalisation argument always contains the following required parameters f
 
 Any other placeholder fields included in the letter template also count as required parameters. You need to provide their values in a dictionary with key value pairs. For example:
 
-```python
-personalisation={
-  'address_line_1': 'The Occupier',
-  'address_line_2': '123 High Street',
-  'postcode': 'SW14 6BF',
-  'name': 'John Smith',
-  'application_id': '4134325'
-}
-```
+_QP: How do you provide the information?_
 
-#### reference (optional)
+_example?_
+
+#### "yourReferenceString" (optional)
 
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
@@ -337,35 +326,22 @@ reference=’STRING’ # optional string - identifies notification(s)
 
 The following parameters in the letter recipient's address are optional:
 
-```python
-personalisation={
-    'address_line_3': '123 High Street', 	
-    'address_line_4': 'Richmond upon Thames', 	
-    'address_line_5': 'London', 		
-    'address_line_6': 'Middlesex',
-}
-```
+_QP: How do you provide the information?_
+
+_example?_
 
 ### Response
 
 If the request to the client is successful, you will receive the following `dict` response:
 
-```python
-{
-  "id": "740e5834-3a29-46b4-9a6f-16142fde533a",
-  "reference": 'STRING',
-  "content": {
-    "subject": "SUBJECT TEXT",
-    "body": "LETTER TEXT",
-  },
-  "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
-  "template": {
-    "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
-    "version": NUMBER,
-    "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
-  }
-  "scheduled_for": None
-}
+```java
+	UUID notificationId;
+	Optional<String> reference;
+	UUID templateId;
+	int templateVersion;
+	String templateUri;
+	String body;
+	String subject;
 ```
 
 ### Error codes
