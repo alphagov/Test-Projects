@@ -2,13 +2,79 @@
 
 ## Install the client
 
-Run the following code in the command line:
+### Maven
 
-```shell
-pip install notifications-python-client
+The notifications-java-client is deployed to [Bintray](https://bintray.com/gov-uk-notify/maven/notifications-java-client). Add this snippet to your Maven `settings.xml` file.
+
+_QP: Where is this file located?_
+_QP: What are the steps? Maven followed by something else? Any criteria on what steps to use?_
+_QP: Should we put anything in about the version number?_
+
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<settings xsi:schemaLocation='http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd' xmlns='http://maven.apache.org/SETTINGS/1.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+<profiles>
+	<profile>
+		<repositories>
+			<repository>
+				<snapshots>
+					<enabled>false</enabled>
+				</snapshots>
+				<id>bintray-gov-uk-notify-maven</id>
+				<name>bintray</name>
+				<url>http://dl.bintray.com/gov-uk-notify/maven</url>
+			</repository>
+		</repositories>
+		<pluginRepositories>
+			<pluginRepository>
+				<snapshots>
+					<enabled>false</enabled>
+				</snapshots>
+				<id>bintray-gov-uk-notify-maven</id>
+				<name>bintray-plugins</name>
+				<url>http://dl.bintray.com/gov-uk-notify/maven</url>
+			</pluginRepository>
+		</pluginRepositories>
+		<id>bintray</id>
+	</profile>
+</profiles>
+<activeProfiles>
+	<activeProfile>bintray</activeProfile>
+</activeProfiles>
+</settings>
+```
+Then add the Maven dependency to your project.
+```xml
+    <dependency>
+        <groupId>uk.gov.service.notify</groupId>
+        <artifactId>notifications-java-client</artifactId>
+        <version>3.8.0-RELEASE</version>
+    </dependency>
+
 ```
 
-The client supports both Python 3.x and 2.7. Refer to the [client change log](https://github.com/alphagov/notifications-python-client/blob/master/CHANGELOG.md) for the version number and the latest updates.
+### Gradle
+
+_QP: Add this to the application code? If so, in any particular order? Is this in addition to Maven, or instead of?_
+
+```
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile('uk.gov.service.notify:notifications-java-client:3.8.0-RELEASE')
+}
+```
+
+### Artifactory or Nexus
+
+Click 'set me up!' on https://bintray.com/gov-uk-notify/maven/notifications-java-client for instructions.
+
+_QP: This link takes you to some code that looks the same as the code in the Maven section. How does this all fit together? What exactly are you supposed to do and in what order?_
+
+
+Refer to the [client change log](https://github.com/alphagov/notifications-java-client/blob/master/CHANGELOG.md) for the version number and the latest updates.
 
 ## Create a new instance of the client
 
