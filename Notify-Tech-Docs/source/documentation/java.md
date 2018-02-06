@@ -366,6 +366,8 @@ The possible status of a message depends on the message type.
 
 ## Status - text and email
 
+_QP: Should I add created and sent for text and email and text respectively?_
+
 ### Sending
 
 The message is queued to be sent by the provider.
@@ -396,46 +398,43 @@ Notify is printing and posting the letter.
 
 ### Method
 
-```python
-response = notifications_client.get_notification_by_id(notification_id)
+```java
+Notification notification = client.getNotificationById(notificationId);
 ```
 
 ### Arguments
 
-#### notification_id (required)
+#### notificationId (required)
 
 The ID of the notification.
 
 ### Response
 
-If the request to the client is successful, you will receive the following `dict` response:
+If the request to the client is successful, you will receive the following `notification` response:
 
-```python
-{
-  "id": "740e5834-3a29-46b4-9a6f-16142fde533a", # required string - notification ID
-  "reference": "STRING", # optional string
-  "email_address": "sender@something.com",  # required string for emails
-  "phone_number": "+447900900123",  # required string for text messages
-  "line_1": "ADDRESS LINE 1", # required string for letter
-  "line_2": "ADDRESS LINE 2", # required string for letter
-  "line_3": "ADDRESS LINE 3", # optional string for letter
-  "line_4": "ADDRESS LINE 4", # optional string for letter
-  "line_5": "ADDRESS LINE 5", # optional string for letter
-  "line_6": "ADDRESS LINE 6", # optional string for letter
-  "postcode": "STRING", # required string for letter
-  "type": "sms / letter / email", # required string
-  "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
-  "template": {
-    "Version": NUMBER # required string - template version
-    "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
-    "uri": "/v2/template/{id}/{version}", # required
-  },
-  "body": "STRING", # required string - body of notification
-  "subject": "STRING" # required string for email - subject of email
-	"created_at": "STRING", # required string - date and time notification created
-	"sent_at": "STRING", # optional string - date and time notification sent to provider
-	"completed_at:" "STRING" # optional string - date and time notification delivered or failed
-}
+```
+UUID id;
+Optional<String> reference;
+Optional<String> emailAddress;
+Optional<String> phoneNumber;
+Optional<String> line1;
+Optional<String> line2;
+Optional<String> line3;
+Optional<String> line4;
+Optional<String> line5;
+Optional<String> line6;
+Optional<String> postcode;
+String notificationType;
+String status;
+UUID templateId;
+int templateVersion;
+String templateUri;
+String body;
+Optional<String subject;
+DateTime createdAt;
+Optional<DateTime> sentAt;
+Optional<DateTime> completedAt;
+Optional<DateTime> estimatedDelivery;
 ```
 
 ### Error codes
@@ -460,19 +459,21 @@ This API call returns the status of all messages. You can either get the status 
 
 This will return all your messages with statuses; they will be displayed in pages of up to 250 messages each.
 
-```python
-response = notifications_client.get_all_notifications(template_type, status, reference, older_than)
+```java
+NotificationList notification = client.getNotifications(status, notificationType, reference, olderThanId);
 ```
 
 You can filter the returned messages by including the following optional arguments in the method:
 
-- [`template_type`](/#template-type)
+- [`notificationType`](/#template-type)
 - [`status`](/#status)
 - [`reference`](/#get-the-status-of-all-messages-optional-arguments-reference)
-- [`older_than`](/#older-than)
+- [`olderThanId`](/#older-than)
 
 
 #### One page of up to 250 messages
+
+_QP: Does this apply?_
 
 This will return one page of up to 250 messages and statuses. You can get either the most recent messages, or get older messages by specifying a particular notification ID in the [`older_than`](/#older-than) argument.
 
@@ -503,7 +504,7 @@ This method will return the next oldest messages from the specified notification
 
 You can omit any of these arguments to ignore these filters.
 
-#### template_type (optional)
+#### notificationType (optional)
 
 You can filter by:
 
@@ -527,17 +528,13 @@ You can filter by:
 
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
-```python
-reference=’STRING’ # optional string - identifies notification(s)
-```
+_example?_
 
-#### older_than (optional)
+#### olderThanId (optional)
 
 Input the ID of a notification into this argument. If you use this argument, the next 250 received notifications older than the given ID are returned.
 
-```python
-older_than=’740e5834-3a29-46b4-9a6f-16142fde533a’ # optional string - notification ID
-```
+_example?_
 
 If this argument is omitted, the most recent 250 notifications are returned.
 
@@ -547,44 +544,15 @@ If the request to the client is successful, you will receive a `dict` response.
 
 #### All messages
 
-```python
-{"notifications":
-  [
-    {
-      "id": "740e5834-3a29-46b4-9a6f-16142fde533a", # required string - notification ID
-      "reference": "STRING", # optional string - client reference
-      "email_address": "sender@something.com",  # required string for emails
-      "phone_number": "+447900900123",  # required string for text messages
-      "line_1": "ADDRESS LINE 1", # required string for letter
-      "line_2": "ADDRESS LINE 2", # required string for letter
-      "line_3": "ADDRESS LINE 3", # optional string for letter
-      "line_4": "ADDRESS LINE 4", # optional string for letter
-      "line_5": "ADDRESS LINE 5", # optional string for letter
-      "line_6": "ADDRESS LINE 6", # optional string for letter
-      "postcode": "STRING", # required for string letter
-      "type": "sms / letter / email", # required string
-      "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
-      "template": {
-        "version": NUMBER # required string - template version
-        "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
-        "uri": "/v2/template/{id}/{version}", # required
-      },
-      "body": "STRING", # required string - body of notification
-      "subject": "STRING" # required string for email - subject of email
-      "created_at": "STRING", # required string - date and time notification created
-      "sent_at": " STRING", # optional string - date and time notification sent to provider
-      "Completed_at": "STRING" # optional string - date and time notification delivered or failed
-    },
-    …
-  ],
-  "links": {
-    "current": "/notifications?template_type=sms&status=delivered",
-    "next": "/notifications?other_than=last_id_in_list&template_type=sms&status=delivered"
-  }
-}
+```java
+List<Notification> notifications;
+String currentPageLink;
+Optional<String> nextPageLink;
 ```
 
 #### One page of up to 250 messages
+
+_QP: Does this apply?_
 
 ```python
 <generator object NotificationsAPIClient.get_all_notifications_iterator at 0x1026c7410>
@@ -610,15 +578,13 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 This will return the latest version of the template.
 
-```python
-response = notifications_client.get_template(
-  `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
-)
+```java
+Template template = client.getTemplateById(templateId);
 ```
 
 ### Arguments
 
-#### template_id (required)
+#### templateId (required)
 
 The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
 
@@ -626,17 +592,16 @@ The ID of the template. You can find this by logging into GOV.UK Notify and goin
 
 If the request to the client is successful, you will receive a `dict` response.
 
-```python
-{
-    "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
-    "type": "sms / email / letter" , # required string
-    "created_at": "STRING", # required string - date and time template created
-    "updated_at": "STRING", # required string - date and time template last updated
-    "version": NUMBER, # required string - template version
-    "created_by": "someone@example.com", # required string
-    "body": "STRING", # required string - body of notification
-    "subject": "STRING" # required string for email - subject of email
-}
+```java
+UUID id;
+String templateType;
+DateTime createdAt;
+Optional<DateTime> updatedAt;
+String createdBy;
+int version;
+String body;
+Optional<String> subject;
+Optional<Map<String, Object>> personalisation;
 ```
 
 ### Error codes
@@ -656,16 +621,13 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 This will return the latest version of the template.
 
-```python
-response = notifications_client.get_template_version(
-    `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
-    ‘version’: NUMBER, # required string - template version
-)
+```java
+Template template = client.getTemplateVersion(templateId, version);
 ```
 
 ### Arguments
 
-#### template_id (required)
+#### templateId (required)
 
 The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
 
@@ -677,17 +639,16 @@ The version number of the template.
 
 If the request to the client is successful, you will receive a `dict` response.
 
-```python
-{
-    "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
-    "type": "sms / email / letter" , # required string
-    "created_at": "STRING", # required string - date and time template created
-    "updated_at": "STRING", # required string - date and time template last updated
-    "version": NUMBER, # required string - template version
-    "created_by": "someone@example.com", # required string
-    "body": "STRING", # required string - body of notification
-    "subject": "STRING" # required string for email - subject of email
-}
+```ava
+UUID id;
+String templateType;
+DateTime createdAt;
+Optional<DateTime> updatedAt;
+String createdBy;
+int version;
+String body;
+Optional<String> subject;
+Optional<Map<String, Object>> personalisation;
 ```
 
 ### Error codes
@@ -707,15 +668,13 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 This will return the latest version of all templates.
 
-```python
-response = notifications_client.get_all_templates(
-    template_type="sms / letter / email" # optional string
-)
+```java
+TemplateList templates = client.getAllTemplates(templateType);
 ```
 
 ### Arguments
 
-#### template_type (optional)
+#### templateType (optional)
 
 If omitted all templates are returned. Otherwise you can filter by:
 
@@ -727,33 +686,13 @@ If omitted all templates are returned. Otherwise you can filter by:
 
 If the request to the client is successful, you will receive a `dict` response.
 
-```python
-{
-    "templates": [
-        {
-            "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
-    		"type": "sms / email / letter" , # required string
-    		"created_at": "STRING", # required string - date and time template created
-    		"updated_at": "STRING", # required string - date and time template last updated
-    		"version": NUMBER, # required string - template version
-    		"created_by": "someone@example.com", # required string
-    		"body": "STRING", # required string - body of notification
-    		"subject": "STRING" # required string for email - subject of email
-        },
-        {
-            ...another template
-        }
-    ]
-}
+```java
+List<Template> templates;
 ```
 
-If no templates exist for a template type or there no templates for a service, you will receive a `dict` response with an empty `templates` list element:
+If no templates exist for a template type or there no templates for a service, the templates list will be empty:
 
-```python
-{
-    "templates": []
-}
-```
+_Example?_
 
 ## Generate a preview template
 
@@ -761,48 +700,38 @@ If no templates exist for a template type or there no templates for a service, y
 
 This will generate a preview version of a template.
 
-```python
-response = notifications_client.post_template_preview(
-    'template_id'='f33517ff-2a88-4f6e-b855-c550268ce08a', # required UUID string
-    personalisation={
-        'KEY': 'VALUE',
-        'KEY': 'VALUE',
-        ...
-        }, # required dict - specifies template parameters
-)
+```java
+TemplatePreview templatePreview = client.getTemplatePreview(templateId, personalisation)
 ```
 
 The parameters in the personalisation argument must match the placeholder fields in the actual template. The API notification client will ignore any extra fields in the method.
 
 ### Arguments
 
-#### template_id (required)
+#### templateId (required)
 
 The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
 
 #### personalisation (required)
 
-If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values in a dictionary with key value pairs. For example:
+If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values, for example:
 
-```python
-personalisation={
-    'first_name': 'Amala',
-    'application_date': '2018-01-01',
-}
+```java
+Map<String, String> personalisation = new HashMap<>();
+personalisation.put("name", "Jo");
+personalisation.put("reference_number", "13566");
 ```
 
 ### Response
 
 If the request to the client is successful, you will receive a `dict` response.
 
-```python
-{
-    "id": "740e5834-3a29-46b4-9a6f-16142fde533a", # required string - notification ID
-    "type": "sms / email / letter" , # required string
-    "version": NUMBER, # required string - template version
-    "body": "STRING", # required string - body of notification
-    "subject": "STRING" # required string for email - subject of email
-}
+```java
+UUID id;
+String templateType;
+int version;
+String body;
+Optional<String> subject;
 ```
 
 ### Error codes
@@ -823,23 +752,47 @@ This API call returns received text messages. Depending on which method you use,
 
 ## Get all received text messages
 
-This method will return a `<generator object>` with all received text messages.
+This method will return a `ReceivedTextMessageList` with all received text messages.
 
 ### Method
 
-```python
-response = get_received_texts_iterator()
+```java
+ReceivedTextMessageList response = client.getReceivedTextMessages(olderThanId);
 ```
+
+### Arguments
+
+#### olderThanId (optional)
+
+Input the ID of a received text message into this argument. If you use this argument, the next 250 received text messages older than the given ID are returned.
+
+_EXAMPLE_
+
+If this argument is omitted, the most recent 250 text messages are returned.
 
 ### Response
 
-If the request to the client is successful, you will receive a `<generator object>` response that will return all received texts.
+If the request to the client is successful, you will receive a `ReceivedTextMessageList` response that will return all received texts.
 
-```python
-<generator object NotificationsAPIClient.get_received_texts_iterator at 0x1026c7410>
+```java
+private List<ReceivedTextMessage> receivedTextMessages;
+private String currentPageLink;
+private String nextPageLink;
+```
+The `ReceivedTextMessageList` will have the following properties:
+
+```java
+private UUID id;
+private String notifyNumber;
+private String userNumber;
+private UUID serviceId;
+private String content;
+private DateTime createdAt;
 ```
 
 ## Get one page of received text messages
+
+_DOES THIS APPLY?_
 
 This will return one page of up to 250 text messages.  
 
@@ -853,7 +806,7 @@ You can specify which texts to receive by inputting the ID of a received text me
 
 ### Arguments
 
-#### older_than (optional)
+#### olderThanId (optional)
 
 Input the ID of a received text message into this argument. If you use this argument, the next 250 received text messages older than the given ID are returned.
 
