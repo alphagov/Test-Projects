@@ -20,11 +20,11 @@ from notifications_python_client.notifications import NotificationsAPIClient
 notifications_client = NotificationsAPIClient(api_key)
 ```
 
-To get an API key, [log in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the _API integration_ page. More information can be found in the [API keys](/#api-keys) section.
+To get an API key, [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the _API integration_ page. More information can be found in the [API keys](/#api-keys) section.
 
 # Send a message
 
-GOV.UK Notify enables you to send text messages, emails and letters.
+You can use GOV.UK Notify to send text messages, emails and letters.
 
 ## Send a text message
 
@@ -45,7 +45,7 @@ The phone number of the recipient of the text message. This number can be UK or 
 
 #### template_id (required)
 
-The ID of the template. You can find this by logging into [GOV.UK Notify](https://www.notifications.service.gov.uk/) and going to the _Templates_ page.
+The ID of the template. You can find this by signing into [GOV.UK Notify](https://www.notifications.service.gov.uk/) and going to the _Templates_ page.
 
 #### personalisation (optional)
 
@@ -70,9 +70,8 @@ reference='STRING', # optional string - identifies notification(s)
 
 A unique identifier of the sender of the text message notification. To set this up:
 
-1. Log into your GOV.UK Notify account.
+1. Sign into your GOV.UK Notify account.
 1. Go to _Settings_.
-1. Check that you are in the correct service. If you are not, click _Switch service_ in the top right corner of the screen and select the correct one.
 1. Go to the _Text Messages_ section and click _Manage_ on the "Text Message sender" row.
 1. You can do one of the following:
   - copy the ID of the sender you want to use and paste it into the method
@@ -99,7 +98,7 @@ If the request to the client is successful, you will receive the following `dict
   "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
   "template": {
     "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a',
-    "version": NUMBER,
+    "version": INTEGER,
     "uri": "https://api.notifications.service.gov.uk/v2/template/ceb50d92-100d-4b8b-b559-14fa3b091cd"
   }
 }
@@ -138,11 +137,11 @@ response = notifications_client.send_email_notification(
 
 #### email_address (required)
 
-The email address of the recipient, only required for email notifications.
+The email address of the recipient.
 
 #### template_id (required)
 
-The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
+The ID of the template. You can find this by signing into GOV.UK Notify and going to the _Templates_ page.
 
 #### personalisation (optional)
 
@@ -167,9 +166,8 @@ reference='STRING', # optional string - identifies notification(s)
 
 This is an email reply-to address specified by you to receive replies from your users. Your service cannot go live until at least one email address has been set up for this. To set up:
 
-1. Log into your GOV.UK Notify account.
+1. Sign into your GOV.UK Notify account.
 1. Go to _Settings_.
-1. Check that you are in the correct service. If you are not, click _Switch service_ in the top right corner of the screen and select the correct one.
 1. Go to the Email section and click _Manage_ on the "Email reply to addresses" row.
 1. Click _Change_ to specify the email address to receive replies, and click _Save_.
 
@@ -195,7 +193,7 @@ If the request to the client is successful, you will receive the following `dict
   "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
   "template": {
     "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
-    "version": NUMBER,
+    "version": INTEGER,
     "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
   }
   }
@@ -237,7 +235,7 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
 
 #### template_id (required)
 
-The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
+The ID of the template. You can find this by signing into GOV.UK Notify and going to the _Templates_ page.
 
 #### personalisation (required)
 
@@ -264,7 +262,7 @@ personalisation={
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
 ```python
-reference=’STRING’ # optional string - identifies notification(s)
+reference='STRING' # optional string - identifies notification(s)
 ```
 
 #### personalisation (optional)
@@ -295,7 +293,7 @@ If the request to the client is successful, you will receive the following `dict
   "uri": "https://api.notifications.service.gov.uk/v2/notifications/740e5834-3a29-46b4-9a6f-16142fde533a",
   "template": {
     "id": "f33517ff-2a88-4f6e-b855-c550268ce08a",
-    "version": NUMBER,
+    "version": INTEGER,
     "uri": "https://api.notifications.service.gov.uk/v2/template/f33517ff-2a88-4f6e-b855-c550268ce08a"
   }
   "scheduled_for": None
@@ -384,7 +382,7 @@ If the request to the client is successful, you will receive the following `dict
   "type": "sms / letter / email", # required string
   "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
   "template": {
-    "Version": NUMBER # required string - template version
+    "Version": INTEGER
     "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
     "uri": "/v2/template/{id}/{version}", # required
   },
@@ -486,7 +484,7 @@ You can filter by:
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
 ```python
-reference=’STRING’ # optional string - identifies notification(s)
+reference='STRING' # optional string - identifies notification(s)
 ```
 
 #### older_than (optional)
@@ -494,7 +492,7 @@ reference=’STRING’ # optional string - identifies notification(s)
 Input the ID of a notification into this argument. If you use this argument, the next 250 received notifications older than the given ID are returned.
 
 ```python
-older_than=’740e5834-3a29-46b4-9a6f-16142fde533a’ # optional string - notification ID
+older_than='740e5834-3a29-46b4-9a6f-16142fde533a' # optional string - notification ID
 ```
 
 If this argument is omitted, the most recent 250 notifications are returned.
@@ -523,7 +521,7 @@ If the request to the client is successful, you will receive a `dict` response.
       "type": "sms / letter / email", # required string
       "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
       "template": {
-        "version": NUMBER # required string - template version
+        "version": INTEGER 
         "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
         "uri": "/v2/template/{id}/{version}", # required
       },
@@ -578,7 +576,7 @@ response = notifications_client.get_template(
 
 #### template_id (required)
 
-The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
+The ID of the template. You can find this by signing into GOV.UK Notify and going to the _Templates_ page.
 
 ### Response
 
@@ -590,7 +588,7 @@ If the request to the client is successful, you will receive a `dict` response.
     "type": "sms / email / letter" , # required string
     "created_at": "STRING", # required string - date and time template created
     "updated_at": "STRING", # required string - date and time template last updated
-    "version": NUMBER, # required string - template version
+    "version": INTEGER,
     "created_by": "someone@example.com", # required string
     "body": "STRING", # required string - body of notification
     "subject": "STRING" # required string for email - subject of email
@@ -616,8 +614,8 @@ This will return the latest version of the template.
 
 ```python
 response = notifications_client.get_template_version(
-    `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
-    ‘version’: NUMBER, # required string - template version
+    'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
+    'version': INTEGER, 
 )
 ```
 
@@ -625,7 +623,7 @@ response = notifications_client.get_template_version(
 
 #### template_id (required)
 
-The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
+The ID of the template. You can find this by signing into GOV.UK Notify and going to the _Templates_ page.
 
 #### version (required)
 
@@ -637,11 +635,11 @@ If the request to the client is successful, you will receive a `dict` response.
 
 ```python
 {
-    "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
+    "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
     "type": "sms / email / letter" , # required string
     "created_at": "STRING", # required string - date and time template created
     "updated_at": "STRING", # required string - date and time template last updated
-    "version": NUMBER, # required string - template version
+    "version": INTEGER, 
     "created_by": "someone@example.com", # required string
     "body": "STRING", # required string - body of notification
     "subject": "STRING" # required string for email - subject of email
@@ -689,7 +687,7 @@ If the request to the client is successful, you will receive a `dict` response.
 {
     "templates": [
         {
-            "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
+            "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
     		"type": "sms / email / letter" , # required string
     		"created_at": "STRING", # required string - date and time template created
     		"updated_at": "STRING", # required string - date and time template last updated
@@ -736,7 +734,7 @@ The parameters in the personalisation argument must match the placeholder fields
 
 #### template_id (required)
 
-The ID of the template. You can find this by logging into GOV.UK Notify and going to the _Templates_ page.
+The ID of the template. You can find this by signing into GOV.UK Notify and going to the _Templates_ page.
 
 #### personalisation (required)
 
@@ -757,7 +755,7 @@ If the request to the client is successful, you will receive a `dict` response.
 {
     "id": "740e5834-3a29-46b4-9a6f-16142fde533a", # required string - notification ID
     "type": "sms / email / letter" , # required string
-    "version": NUMBER, # required string - template version
+    "version": INTEGER, 
     "body": "STRING", # required string - body of notification
     "subject": "STRING" # required string for email - subject of email
 }
@@ -791,7 +789,7 @@ response = get_received_texts_iterator()
 
 ### Response
 
-If the request to the client is successful, you will receive a `<generator object>` response that will return all received texts.
+If the request to the client is successful, you will receive a `<generator object>` response that will return all received text messages.
 
 ```python
 <generator object NotificationsAPIClient.get_received_texts_iterator at 0x1026c7410>
@@ -807,7 +805,7 @@ This will return one page of up to 250 text messages.
 response = client.get_received_texts(older_than)
 ```
 
-You can specify which texts to receive by inputting the ID of a received text message into the [`older_than`](/#get-one-page-of-received-text-messages-optional-arguments-older-than) argument.
+You can specify which text messages to receive by inputting the ID of a received text message into the [`older_than`](/#get-one-page-of-received-text-messages-optional-arguments-older-than) argument.
 
 ### Arguments
 
@@ -816,7 +814,7 @@ You can specify which texts to receive by inputting the ID of a received text me
 Input the ID of a received text message into this argument. If you use this argument, the next 250 received text messages older than the given ID are returned.
 
 ```python
-older_than=’740e5834-3a29-46b4-9a6f-16142fde533a’ # optional string - notification ID
+older_than='740e5834-3a29-46b4-9a6f-16142fde533a' # optional string - notification ID
 ```
 
 If this argument is omitted, the most recent 250 text messages are returned.
@@ -824,7 +822,6 @@ If this argument is omitted, the most recent 250 text messages are returned.
 ### Response
 
 If the request to the client is successful, you will receive a `dict` response.
-
 
 ```python
 {
