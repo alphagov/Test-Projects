@@ -20,7 +20,7 @@ from notifications_python_client.notifications import NotificationsAPIClient
 notifications_client = NotificationsAPIClient(api_key)
 ```
 
-To get an API key, [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the _API integration_ page. More information can be found in the [API keys](/#api-keys) section.
+To get an API key, [sign in to GOV.UK Notify](https://www.notifications.service.gov.uk/) and go to the _API integration_ page. More information is in the [API keys](/#api-keys) section.
 
 # Send a message
 
@@ -414,7 +414,7 @@ This API call returns the status of all messages. You can either get the status 
 
 #### All messages
 
-This will return all your messages with statuses; they will be displayed in pages of up to 250 messages each.
+This will return all your messages with statuses; they will display in pages of up to 250 messages each.
 
 ```python
 response = notifications_client.get_all_notifications(template_type, status, reference, older_than)
@@ -489,13 +489,13 @@ reference='STRING' # optional string - identifies notification(s)
 
 #### older_than (optional)
 
-Input the ID of a notification into this argument. If you use this argument, the next 250 received notifications older than the given ID are returned.
+Input the ID of a notification into this argument. If you use this argument, the method retuns the next 250 received notifications older than the given ID.
 
 ```python
 older_than='740e5834-3a29-46b4-9a6f-16142fde533a' # optional string - notification ID
 ```
 
-If this argument is omitted, the most recent 250 notifications are returned.
+If this argument is omitted, the method returns the most recent 250 notifications.
 
 ### Response
 
@@ -673,7 +673,7 @@ response = notifications_client.get_all_templates(
 
 #### template_type (optional)
 
-If omitted all templates are returned. Otherwise you can filter by:
+If omitted, the method returns all templates. Otherwise you can filter by:
 
 - `email`
 - `sms`
@@ -811,13 +811,13 @@ You can specify which text messages to receive by inputting the ID of a received
 
 #### older_than (optional)
 
-Input the ID of a received text message into this argument. If you use this argument, the next 250 received text messages older than the given ID are returned.
+Input the ID of a received text message into this argument. If you use this argument, the method returns the next 250 received text messages older than the given ID.
 
 ```python
 older_than='740e5834-3a29-46b4-9a6f-16142fde533a' # optional string - notification ID
 ```
 
-If this argument is omitted, the most recent 250 text messages are returned.
+If this argument is omitted, the method returns the most recent 250 text messages.
 
 ### Response
 
