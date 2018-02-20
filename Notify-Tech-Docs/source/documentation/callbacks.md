@@ -22,6 +22,17 @@ Contact the GOV.UK Notify team on the [support page](https://www.notifications.s
 
 The callback message is formatted in JSON. The key, description and format of the callback message arguments are specified below:
 
+|Key|Description|Format|
+|:---|:---|:---|
+|`id`|Notify’s id for the status receipts|UUID|
+|`reference`|The reference sent by the service|12345678|
+|`to`|The email address of the recipient|hello@gov.uk|
+|`status`|The status of the notification|delivered / permanent-failure / temporary-failure / technical-failure| 
+|`created_at`|The time the service sent the request|2017-05-14T12:15:30.000000Z|
+|`completed_at`|The last time the status was updated|2017-05-14T12:15:30.000000Z|
+|`sent_at`|The time the notification was sent|2017-05-14T12:15:30.000000Z or nil|
+|`notification_type`|The notification type|email / sms / letter|
+
 
 ## For delivery receipts
 
