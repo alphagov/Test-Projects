@@ -383,7 +383,7 @@ If the request to the client is successful, you will receive the following `dict
   "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
   "template": {
     "Version": INTEGER
-    "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
+    "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
     "uri": "/v2/template/{id}/{version}", # required
   },
   "body": "STRING", # required string - body of notification
@@ -522,7 +522,7 @@ If the request to the client is successful, you will receive a `dict` response.
       "status": "sending / delivered / permanent-failure / temporary-failure / technical-failure", # required string
       "template": {
         "version": INTEGER 
-        "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
+        "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
         "uri": "/v2/template/{id}/{version}", # required
       },
       "body": "STRING", # required string - body of notification
@@ -568,7 +568,7 @@ This will return the latest version of the template.
 
 ```python
 response = notifications_client.get_template(
-  `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
+  'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
 )
 ```
 
@@ -584,7 +584,7 @@ If the request to the client is successful, you will receive a `dict` response.
 
 ```python
 {
-    "id": `f33517ff-2a88-4f6e-b855-c550268ce08a` # required string - template ID
+    "id": 'f33517ff-2a88-4f6e-b855-c550268ce08a' # required string - template ID
     "type": "sms / email / letter" , # required string
     "created_at": "STRING", # required string - date and time template created
     "updated_at": "STRING", # required string - date and time template last updated
