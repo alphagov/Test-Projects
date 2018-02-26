@@ -94,7 +94,7 @@ To get an API key, [log in to GOV.UK Notify](https://www.notifications.service.g
 
 # Send a message
 
-GOV.UK Notify enables you to send text messages, emails and letters.
+You can use GOV.UK Notify to send text messages, emails and letters.
 
 ## Send a text message
 
@@ -211,7 +211,7 @@ The ID of the template. You can find this by logging into GOV.UK Notify and goin
 
 #### personalisation (optional)
 
-If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values in a dictionary with key value pairs. For example:
+If a template has placeholder fields for personalised information such as name or reference number, you need to provide their values in a _dictionary with key value pairs_. For example:
 
 ```java
 Map<String, String> personalisation = new HashMap<>();
@@ -220,8 +220,6 @@ personalisation.put("reference_number", "13566");
 ```
 
 #### reference (optional)
-
-_QP: Is it yourReferenceString or reference?_
 
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
@@ -254,7 +252,7 @@ If the request to the client is successful, you will receive the following `dict
 	String body;
 	String subject;
 	Optional<String> fromEmail;
-  ```
+```
 
 ### Error codes
 
@@ -285,14 +283,7 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
 ```
 
 
-```java
-	personalisation.put("address_line_3", "123 High Street"); // optional address field
-	personalisation.put("address_line_4", "Richmond upon Thames"); // optional address field
-	personalisation.put("address_line_5", "London"); // optional address field
-	personalisation.put("address_line_6", "Middlesex"); // optional address field
-	personalisation.put("application_id", "1234"); // field from template
-	personalisation.put("application_date", "2017-01-01"); // field from template
-```
+
 
 ### Arguments
 
@@ -308,7 +299,7 @@ The personalisation argument always contains the following required parameters f
 - `address_line_2`
 - `postcode`
 
-Any other placeholder fields included in the letter template also count as required parameters. You need to provide their values in a dictionary with key value pairs. For example:
+Any other placeholder fields included in the letter template also count as required parameters. You need to provide their values _in a dictionary with key value pairs_. For example:
 
 _QP: How do you provide the information?_
 
@@ -318,13 +309,20 @@ _example?_
 
 A unique identifier. This reference can identify a single unique notification or a batch of multiple notifications.
 
-```python
-reference=’STRING’ # optional string - identifies notification(s)
-```
+_example?_
 
 #### personalisation (optional)
 
 The following parameters in the letter recipient's address are optional:
+
+```java
+	personalisation.put("address_line_3", "123 High Street"); // optional address field
+	personalisation.put("address_line_4", "Richmond upon Thames"); // optional address field
+	personalisation.put("address_line_5", "London"); // optional address field
+	personalisation.put("address_line_6", "Middlesex"); // optional address field
+	personalisation.put("application_id", "1234"); // field from template
+	personalisation.put("application_date", "2017-01-01"); // field from template
+```
 
 _QP: How do you provide the information?_
 
@@ -370,7 +368,15 @@ _QP: Should I add created and sent for text and email and text respectively?_
 
 ### Sending
 
-The message is queued to be sent by the provider.
+The message has been passed on to our providers to send to the recipient, and we are waiting for delivery information.
+
+### Created
+
+The message is queued to be sent to our providers. The notification typically only remains in this state for a few seconds.
+
+### Sent
+
+The message was delivered internationally. We may not receive additional status updates depending on the recipient's country and telecoms provider.
 
 ### Delivered
 
@@ -564,7 +570,7 @@ If the request is not successful, the client will raise an `HTTPError`:
 
 |`error.status_code`|`error.message`||
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "bad status is not one of [created, sending, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure]"`<br>`}]`|
+|`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "bad status is not one of [created, sending, sent, delivered, pending, failed, technical-failure, temporary-failure, permanent-failure, accepted, received]"`<br>`}]`|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "Apple is not one of [sms, email, letter]"`<br>`}]`|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
@@ -639,7 +645,7 @@ The version number of the template.
 
 If the request to the client is successful, you will receive a `dict` response.
 
-```ava
+```Java
 UUID id;
 String templateType;
 DateTime createdAt;
