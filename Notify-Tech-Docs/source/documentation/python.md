@@ -72,16 +72,16 @@ A unique identifier of the sender of the text message notification. To set this 
 
 1. Sign into your GOV.UK Notify account.
 1. Go to __Settings__.
-1. Go to the __Text Messages__ section and click __Manage__ on the "Text Message sender" row.
+1. Go to the __Text Messages__ section and select __Manage__ on the "Text Message sender" row.
 1. You can do one of the following:
   - copy the ID of the sender you want to use and paste it into the method
-  - click __Change__ to change the default sender that the service will use, and click __Save__
+  - select __Change__ to change the default sender that the service will use, and select __Save__
 
 ```python
 sms_sender_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 ```
 
-If you omit this argument from your method, the default `sms_sender_id` will be set for the notification.
+If you omit this argument from your method, the client will set the default `sms_sender_id` for the notification.
 
 ### Response
 
@@ -110,14 +110,14 @@ All successfully delivered messages will appear on your dashboard.
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`:
+If the request is not successful, the client will raise an `HTTPError`.
 
-|`error.status_code`|`error.message`|Notes|
+|`error.status_code`|`error.message`|How to fix|
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of API key, refer to [API keys](/#api-keys) for more information|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of API key. Refer to [API keys](/#api-keys) for more information|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Refer to [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode) for more information|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
-|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct type of API key. Refer to [API keys](/#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](/#api-rate-limits) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](/#service-limits) for the limit number|
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
@@ -168,14 +168,14 @@ This is an email reply-to address specified by you to receive replies from your 
 
 1. Sign into your GOV.UK Notify account.
 1. Go to __Settings__.
-1. Go to the Email section and click __Manage__ on the "Email reply to addresses" row.
-1. Click __Change__ to specify the email address to receive replies, and click __Save__.
+1. Go to the Email section and select __Manage__ on the "Email reply to addresses" row.
+1. Select __Change__ to specify the email address to receive replies, and select __Save__.
 
 ```python
 email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
 ```
 
-If you omit this argument, your default email reply-to address will be set for the notification.
+If you omit this argument, the client will set your default email reply-to address for the notification.
 
 ### Response
 
@@ -202,14 +202,14 @@ If the request to the client is successful, you will receive the following `dict
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`:
+If the request is not successful, the client will raise an `HTTPError`.
 
-|`error.status_code`|`error.message`|Notes|
+|`error.status_code`|`error.message`|How to fix|
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of API key, refer to [API keys](/#api-keys) for more information|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient using a team-only API key"`<br>`]}`|Use the correct type of API key. Refer to [API keys](/#api-keys) for more information|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Can't send to this recipient when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Refer to [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode) for more information|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
-|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct type of API key. Refer to [API keys](/#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](/#api-rate-limits) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](/#service-limits) for the limit number|
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
@@ -302,15 +302,15 @@ If the request to the client is successful, you will receive the following `dict
 
 ### Error codes
 
-If the request is not successful, the client will raise an `HTTPError`:
+If the request is not successful, the client will raise an `HTTPError`.
 
-|`error.status_code`|`error.message`|Notes|
+|`error.status_code`|`error.message`|How to fix|
 |:---|:---|:---|
-|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of API key, refer to [API keys](/#api-keys) for more information|
+|`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters with a team api key"`<br>`]}`|Use the correct type of API key. Refer to [API keys](/#api-keys) for more information|
 |`400`|`[{`<br>`"error": "BadRequestError",`<br>`"message": "Cannot send letters when service is in trial mode - see https://www.notifications.service.gov.uk/trial-mode"`<br>`}]`|Refer to [trial mode](https://www.notifications.service.gov.uk/features/using-notify#trial-mode) for more information|
 |`400`|`[{`<br>`"error": "ValidationError",`<br>`"message": "personalisation address_line_1 is a required property"`<br>`}]`|Ensure that your template has a field for the first line of the address, check [personlisation](/#send-a-letter-required-arguments-personalisation) for more information.|
 |`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Error: Your system clock must be accurate to within 30 seconds"`<br>`}]`|Check your system clock|
-|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Check your API key, refer to [API keys](/#api-keys) for more information|
+|`403`|`[{`<br>`"error": "AuthError",`<br>`"message": "Invalid token: signature, api token not found"`<br>`}]`|Use the correct type of API key. Refer to [API keys](/#api-keys) for more information|
 |`429`|`[{`<br>`"error": "RateLimitError",`<br>`"message": "Exceeded rate limit for key type TEAM/TEST/LIVE of 3000 requests per 60 seconds"`<br>`}]`|Refer to [API rate limits](/#api-rate-limits) for more information|
 |`429`|`[{`<br>`"error": "TooManyRequestsError",`<br>`"message": "Exceeded send limits (LIMIT NUMBER) for today"`<br>`}]`|Refer to [service limits](/#service-limits) for the limit number|
 |`500`|`[{`<br>`"error": "Exception",`<br>`"message": "Internal server error"`<br>`}]`|Notify was unable to process the request, resend your notification.|
@@ -334,9 +334,9 @@ The message was successfully delivered.
 
 This covers all failure statuses:
 
-- permanent-failure - "The provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list"
-- temporary-failure - "The provider was unable to deliver message, email inbox was full or phone was turned off; you can try to send the message again"
-- technical-failure - "Notify had a technical failure; you can try to send the message again"
+- `permanent-failure` - "The provider was unable to deliver message, email or phone number does not exist; remove this recipient from your list"
+- `temporary-failure` - "The provider was unable to deliver message, email inbox was full or phone was turned off; you can try to send the message again"
+- `technical-failure` - "Notify had a technical failure; you can try to send the message again"
 
 ## Status - letter
 
@@ -414,7 +414,7 @@ This API call returns the status of all messages. You can either get the status 
 
 #### All messages
 
-This will return all your messages with statuses; they will display in pages of up to 250 messages each.
+This will return all your messages with statuses. They will display in pages of up to 250 messages each.
 
 ```python
 response = notifications_client.get_all_notifications(template_type, status, reference, older_than)
