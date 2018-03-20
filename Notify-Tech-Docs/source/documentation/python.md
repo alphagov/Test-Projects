@@ -8,7 +8,7 @@ Run the following code in the command line:
 pip install notifications-python-client
 ```
 
-The client supports both Python 3.x and 2.7. Refer to the [client change log](https://github.com/alphagov/notifications-python-client/blob/master/CHANGELOG.md) for the version number and the latest updates.
+Refer to the [client change log](https://github.com/alphagov/notifications-python-client/blob/master/CHANGELOG.md) for the client version number and the latest updates.
 
 ## Create a new instance of the client
 
