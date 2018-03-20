@@ -45,7 +45,7 @@ The phone number of the recipient of the text message. This number can be UK or 
 
 #### template_id (required)
 
-The ID of the template. You can find this by signing into [GOV.UK Notify](https://www.notifications.service.gov.uk/) and going to the _Templates_ page.
+The ID of the template. You can find this by signing into [GOV.UK Notify](https://www.notifications.service.gov.uk/) and going to the __Templates__ page.
 
 #### personalisation (optional)
 
@@ -71,11 +71,11 @@ reference='STRING', # optional string - identifies notification(s)
 A unique identifier of the sender of the text message notification. To set this up:
 
 1. Sign into your GOV.UK Notify account.
-1. Go to _Settings_.
-1. Go to the _Text Messages_ section and click _Manage_ on the "Text Message sender" row.
+1. Go to __Settings__.
+1. Go to the __Text Messages__ section and click __Manage__ on the "Text Message sender" row.
 1. You can do one of the following:
   - copy the ID of the sender you want to use and paste it into the method
-  - click _Change_ to change the default sender that the service will use, and click _Save_
+  - click __Change__ to change the default sender that the service will use, and click __Save__
 
 ```python
 sms_sender_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
@@ -141,7 +141,7 @@ The email address of the recipient.
 
 #### template_id (required)
 
-The ID of the template. You can find this by signing into GOV.UK Notify and going to the _Templates_ page.
+The ID of the template. You can find this by signing into GOV.UK Notify and going to the __Templates__ page.
 
 #### personalisation (optional)
 
@@ -167,9 +167,9 @@ reference='STRING', # optional string - identifies notification(s)
 This is an email reply-to address specified by you to receive replies from your users. Your service cannot go live until at least one email address has been set up for this. To set up:
 
 1. Sign into your GOV.UK Notify account.
-1. Go to _Settings_.
-1. Go to the Email section and click _Manage_ on the "Email reply to addresses" row.
-1. Click _Change_ to specify the email address to receive replies, and click _Save_.
+1. Go to __Settings__.
+1. Go to the Email section and click __Manage__ on the "Email reply to addresses" row.
+1. Click __Change__ to specify the email address to receive replies, and click __Save__.
 
 ```python
 email_reply_to_id='8e222534-7f05-4972-86e3-17c5d9f894e2' # optional UUID string
@@ -235,7 +235,7 @@ When your service first signs up to GOV.UK Notify, you’ll start in trial mode.
 
 #### template_id (required)
 
-The ID of the template. You can find this by signing into GOV.UK Notify and going to the _Templates_ page.
+The ID of the template. You can find this by signing into GOV.UK Notify and going to the __Templates__ page.
 
 #### personalisation (required)
 
@@ -342,7 +342,7 @@ This covers all failure statuses:
 
 ### Failed
 
-The only failure status that applies to letters is __technical-failure__ - Notify had an unexpected error while sending to our printing provider.
+The only failure status that applies to letters is `technical-failure` - Notify had an unexpected error while sending to our printing provider.
 
 ### Accepted
 
@@ -576,7 +576,7 @@ response = notifications_client.get_template(
 
 #### template_id (required)
 
-The ID of the template. You can find this by signing into GOV.UK Notify and going to the _Templates_ page.
+The ID of the template. You can find this by signing into GOV.UK Notify and going to the __Templates__ page.
 
 ### Response
 
@@ -623,7 +623,7 @@ response = notifications_client.get_template_version(
 
 #### template_id (required)
 
-The ID of the template. You can find this by signing into GOV.UK Notify and going to the _Templates_ page.
+The ID of the template. You can find this by signing into GOV.UK Notify and going to the __Templates__ page.
 
 #### version (required)
 
@@ -734,7 +734,7 @@ The parameters in the personalisation argument must match the placeholder fields
 
 #### template_id (required)
 
-The ID of the template. You can find this by signing into GOV.UK Notify and going to the _Templates_ page.
+The ID of the template. You can find this by signing into GOV.UK Notify and going to the __Templates__ page.
 
 #### personalisation (required)
 
